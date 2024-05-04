@@ -1,20 +1,25 @@
 <template>
-  <div>
-    <h2>Uploaded Files</h2>
-    <div class="image-gallery">
-      <img v-for="file in uploadedFiles" :key="file.id" :src="file.thumbnailLink" :alt="file.name">
+  <div class="mb-8">
+    <div class="text-2xl">Recipes</div>
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <img v-for="file in uploadedFiles" :key="file.id" :src="file.thumbnailLink" :alt="file.name" class="">
     </div>
+    <FileUpload />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import FileUpload from '@/components/FileUpload.vue'
 
 export default {
   data() {
     return {
       uploadedFiles: []
     };
+  },
+  components: {
+    FileUpload,
   },
   mounted() {
     this.fetchUploadedFiles();
@@ -61,17 +66,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.image-gallery {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.image-gallery img {
-  width: 300px;
-  height: auto;
-  margin: 5px;
-}
-</style>
-
