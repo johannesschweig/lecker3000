@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import FileUpload from '@/components/FileUpload.vue';
-import { useStore } from '@/stores/index.ts'
+import { useStore } from '@/stores/index'
 import { RouterLink } from 'vue-router';
 
 const t = '1'

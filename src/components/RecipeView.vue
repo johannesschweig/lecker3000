@@ -6,8 +6,8 @@
   </div>
 </template>
 
-<script setup>
-import { useStore } from '@/stores/index.ts'
+<script setup lang="ts">
+import { useStore } from '@/stores/index'
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
 

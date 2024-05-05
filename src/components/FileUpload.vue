@@ -9,9 +9,9 @@
 
 <script setup lang="ts">
 import axios from 'axios';
-import { getRandomIdAndExtension } from '@/utils.ts'
+import { getRandomIdAndExtension } from '@/utils'
 import { ref } from 'vue';
-import { useStore } from '@/stores/index.ts';
+import { useStore } from '@/stores/index';
 
 const name = ref('')
 const store = useStore()
