@@ -9,12 +9,15 @@ function createRandomString(length: number) {
 }
 
 
-// returns a file name with an id (8 chars) and the original extension (.png)
-export function getRandomFileName(name: string) {
-  const dotIndex = name.lastIndexOf('.')
-  const extension = dotIndex !== -1 ? name.substring(dotIndex) : '.ERROR'
+// returns a random id and the extension of the fileName
+export function getRandomIdAndExtension(fileName: string) {
+  const dotIndex = fileName.lastIndexOf('.')
+  const extension = dotIndex !== -1 ? fileName.substring(dotIndex) : '.ERROR'
   if (dotIndex === -1) {
-    console.error('ERROR', 'Could not find extension for file', name)
+    console.error('ERROR', 'Could not find extension for file', fileName)
   }
-  return createRandomString(8) + extension
+  return {
+    id: createRandomString(8),
+    extension,
+  }
 }

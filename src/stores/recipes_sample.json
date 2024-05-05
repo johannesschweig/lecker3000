@@ -1,0 +1,22 @@
+[
+  {
+    "id": "wireframe",
+    "name": "Wireframe"
+  },
+  {
+    "id": "screenshot",
+    "name": "Screenshot"
+  },
+  {
+    "id": "ngo",
+    "name": "NGO"
+  },
+  {
+    "id": "laundry",
+    "name": "Laundry"
+  },
+  {
+    "id": "camera1",
+    "name": "Camera 1"
+  }
+]

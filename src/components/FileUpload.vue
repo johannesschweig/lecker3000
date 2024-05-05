@@ -1,16 +1,23 @@
 <template>
-  <div>
-    <input type="file" @change="handleFileUpload">
-    <button @click="uploadFile">Upload</button>
-    <div v-if="uploadedImageUrl">
+  <div class="bg-slate-200 rounded-lg p-4">
+    <div class="text-lg mb-2">New Recipe</div>
+    <input v-model="name" placeholder="Name" class="mb-2 rounded px-2">
+    <input type="file" @change="handleFileUpload" class="mb-2">
+    <button class="bg-slate-700 text-white px-4 py-2 rounded-lg" @click="uploadFile">Upload</button>
+    <!-- <div v-if="uploadedImageUrl">
       <img :src="uploadedImageUrl" alt="Uploaded Image">
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios';
-import { getRandomFileName } from '@/utils.ts'
+import { getRandomIdAndExtension } from '@/utils.ts'
+import { ref } from 'vue';
+import { useStore } from '@/stores/index.ts';
+
+const name = ref('')
+const store = useStore()
 
 let file: File | null = null;
 let uploadedImageUrl = '';
@@ -27,21 +34,23 @@ const uploadFile = async () => {
     alert('Please select a file to upload');
     return;
   }
-  
+  const {id: fileId, extension: fileExtension } = getRandomIdAndExtension(file.name)
+
   try {
     const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
     const headers = {
       'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/octet-stream',
       'Dropbox-API-Arg': JSON.stringify({
-        path: `/recipes/${getRandomFileName(file.name)}`,
+        path: `/recipes/${fileId}${fileExtension}`,
         mode: 'add',
         autorename: true,
         mute: false
       })
     };
     const response = await axios.post('https://content.dropboxapi.com/2/files/upload', file, { headers });
-    
+    store.addRecipe({ id: fileId, name: name.value})
+
     // Extracting the link to the uploaded file from the response
     uploadedImageUrl = response.data.path_display;
   } catch (error) {
@@ -50,4 +59,3 @@ const uploadFile = async () => {
   }
 };
 </script>
-

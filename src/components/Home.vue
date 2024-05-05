@@ -3,11 +3,11 @@
     <div class="text-2xl">Recipes</div>
     <div class="grid grid-cols-3 gap-4 mb-8">
       <div v-for="file in uploadedFiles">
-        <img :key="file.id" :src="file.thumbnailLink" :alt="file.name" class="">
+        <img :key="file.id" :src="file.thumbnailLink" :alt="file.name" class="rounded-lg">
         <div class="text-md">{{ getRecipeName(file.name) }}</div>
       </div>
+      <FileUpload />
     </div>
-    <FileUpload />
   </div>
 </template>
 
