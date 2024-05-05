@@ -3,6 +3,6 @@ import { RouterView, RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <RouterLink class="text-3xl mb-4" to="/">Lecker3000</RouterLink>
+  <RouterLink class="text-3xl mb-2 block" to="/">Lecker3000</RouterLink>
   <RouterView />
 </template>

@@ -1,22 +1,27 @@
 [
   {
     "id": "wireframe",
-    "name": "Wireframe"
+    "name": "Wireframe",
+    "extension": ".png"
   },
   {
     "id": "screenshot",
-    "name": "Screenshot"
+    "name": "Screenshot",
+    "extension": ".png"
   },
   {
     "id": "ngo",
-    "name": "NGO"
+    "name": "NGO",
+    "extension": ".png"
   },
   {
     "id": "laundry",
-    "name": "Laundry"
+    "name": "Laundry",
+    "extension": ".png"
   },
   {
     "id": "camera1",
-    "name": "Camera 1"
+    "name": "Camera 1",
+    "extension": ".jpg"
   }
 ]

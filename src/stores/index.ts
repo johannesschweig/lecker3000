@@ -5,6 +5,8 @@ import axios from 'axios';
 export interface Recipe {
   id: string,
   name: string,
+  extension: string,
+  thumbnail?: string,
 }
 
 export const useStore = defineStore('store', () => {
@@ -61,8 +63,37 @@ export const useStore = defineStore('store', () => {
     }
   }
 
-  
+  async function fetchUploadedFiles() {
+    try {
+      const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
+      const headers = {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      };
+
+      const promises = recipes.value.map(async (recipe: Recipe) => {
+        const downloadUrlResponse = await axios.post('https://api.dropboxapi.com/2/files/get_temporary_link', {
+          // path: entry.path_display,
+          path: `/recipes/${recipe.id}${recipe.extension}`
+        }, { headers });
+        const thumbnail = downloadUrlResponse.data.link
+        const matchingRecipe = recipes.value.find(r => r.id === recipe.id)
+        if (matchingRecipe) {
+          matchingRecipe.thumbnail = thumbnail
+        }
+        return {
+          thumbnail,
+        };
+      });
+      await Promise.all(promises)
+    } catch (error) {
+      console.error('Error fetching uploaded files:', error);
+      alert('An error occurred while fetching uploaded files. Please try again.');
+    }
+  };
+
   onMounted(loadDataFromDropbox)
+  onMounted(() => setTimeout(() => fetchUploadedFiles(), 2500))
 
   return { recipes, addRecipe }
 })
