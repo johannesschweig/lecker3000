@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div class="text-2xl mb-4">Recipe {{ recipe.name }}</div>
-    <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-lg">
+    <div class="text-2xl mb-4">{{ recipe.name }}</div>
+    <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-lg mb-8">
+    <button class="btn-delete" @click="store.deleteRecipe(recipe.id)">Delete recipe</button>
   </div>
 </template>
 

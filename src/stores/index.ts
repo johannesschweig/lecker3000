@@ -17,10 +17,20 @@ export const useStore = defineStore('store', () => {
     writeDataToDropbox()
   }
 
+  function deleteRecipe(id: string) {
+    recipes.value = recipes.value.filter(r => r.id !== id)
+    writeDataToDropbox()
+  }
+
   async function writeDataToDropbox() {
     try {
       // Convert the data to JSON
-      const jsonData = JSON.stringify(recipes.value);
+      const exportRecipes = recipes.value.map(r => {
+        const newR = { ...r }; // Create a shallow copy of the original object
+        delete newR['thumbnail']; // Remove the specified attribute from the new object
+        return newR; // Return the modified object
+      });
+      const jsonData = JSON.stringify(exportRecipes);
 
       // Write the JSON data to Dropbox using the Dropbox API
       const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
@@ -63,7 +73,7 @@ export const useStore = defineStore('store', () => {
     }
   }
 
-  async function fetchUploadedFiles() {
+  async function loadThumbnails() {
     try {
       const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
       const headers = {
@@ -92,8 +102,15 @@ export const useStore = defineStore('store', () => {
     }
   };
 
-  onMounted(loadDataFromDropbox)
-  onMounted(() => setTimeout(() => fetchUploadedFiles(), 2500))
+  onMounted(async () => {
+    try {
+      await loadDataFromDropbox()
+      await loadThumbnails()
+      console.log('Loaded dropbox data and thumbnails successfully');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  })
 
-  return { recipes, addRecipe }
+  return { recipes, addRecipe, deleteRecipe }
 })

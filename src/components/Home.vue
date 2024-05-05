@@ -6,7 +6,7 @@
         <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-lg">
         <div class="text-md">{{ recipe.name }}</div>
       </RouterLink>
-      <FileUpload />
+      <FileUpload class="col-span-2 md:col-span-1"/>
     </div>
   </div>
 </template>

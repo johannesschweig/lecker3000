@@ -3,10 +3,7 @@
     <div class="text-lg mb-2">New Recipe</div>
     <input v-model="name" placeholder="Name" class="mb-2 rounded px-2">
     <input type="file" @change="handleFileUpload" class="mb-2">
-    <button class="bg-slate-700 text-white px-4 py-2 rounded-lg" @click="uploadFile">Upload</button>
-    <!-- <div v-if="uploadedImageUrl">
-      <img :src="uploadedImageUrl" alt="Uploaded Image">
-    </div> -->
+    <button class="btn-primary" @click="uploadFile">Upload</button>
   </div>
 </template>
 
