@@ -1,11 +1,11 @@
 <template>
   <div class="mb-8">
-    <div class="text-2xl">Recipes</div>
-    <div class="grid grid-cols-3 gap-4 mb-8">
-      <div v-for="file in uploadedFiles">
+    <div class="text-2xl mb-4">Recipes</div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+      <RouterLink v-for="file in uploadedFiles" :to="`/recipe/${file.id}`">
         <img :key="file.id" :src="file.thumbnailLink" :alt="file.name" class="rounded-lg">
         <div class="text-md">{{ getRecipeName(file.name) }}</div>
-      </div>
+      </RouterLink>
       <FileUpload />
     </div>
   </div>
@@ -16,6 +16,7 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import FileUpload from '@/components/FileUpload.vue';
 import { useStore } from '@/stores/index.ts'
+import { RouterLink } from 'vue-router';
 
 const store = useStore()
 const uploadedFiles = ref([]);
