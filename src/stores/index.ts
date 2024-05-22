@@ -11,6 +11,11 @@ export interface Recipe {
 
 export const useStore = defineStore('store', () => {
   const recipes = ref<Recipe[]>([])
+  const accessToken = ref<String>('')
+
+  function setAccessToken(t: string) {
+    accessToken.value = t
+  }
 
   function addRecipe(r: Recipe) {
     recipes.value.push(r)
@@ -33,9 +38,8 @@ export const useStore = defineStore('store', () => {
       const jsonData = JSON.stringify(exportRecipes);
 
       // Write the JSON data to Dropbox using the Dropbox API
-      const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
       const headers = {
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${accessToken.value}`,
         'Content-Type': 'application/octet-stream',
         'Dropbox-API-Arg': JSON.stringify({
           path: '/recipes.json',
@@ -53,10 +57,8 @@ export const useStore = defineStore('store', () => {
   async function loadDataFromDropbox() {
     try {
       // Fetch the JSON data from Dropbox using the Dropbox API
-      const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
-
       const headers = {
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${accessToken.value}`,
         'Content-Type': 'application/json',
         'Dropbox-API-Arg': JSON.stringify({
           path: '/recipes.json',
@@ -75,9 +77,8 @@ export const useStore = defineStore('store', () => {
 
   async function loadThumbnails() {
     try {
-      const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
       const headers = {
-        'Authorization': `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${accessToken.value}`,
         'Content-Type': 'application/json'
       };
 
@@ -102,15 +103,7 @@ export const useStore = defineStore('store', () => {
     }
   };
 
-  onMounted(async () => {
-    try {
-      await loadDataFromDropbox()
-      await loadThumbnails()
-      console.log('Loaded dropbox data and thumbnails successfully');
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  })
 
-  return { recipes, addRecipe, deleteRecipe }
+
+  return { recipes, addRecipe, deleteRecipe, loadDataFromDropbox, loadThumbnails, accessToken, setAccessToken }
 })

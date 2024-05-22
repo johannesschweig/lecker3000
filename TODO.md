@@ -1,3 +1,6 @@
 # TODO
 - load thumbnail if added recipe
-- access token seems to expire after one day
+- secure client secret with pkce flow
+
+# v0.1.0
+- implemented oauth2 flow

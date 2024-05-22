@@ -34,9 +34,8 @@ const uploadFile = async () => {
   const {id: fileId, extension: fileExtension } = getRandomIdAndExtension(file.name)
 
   try {
-    const accessToken: string = import.meta.env.VITE_DROPBOX_ACCESS_TOKEN;
     const headers = {
-      'Authorization': `Bearer ${accessToken}`,
+      'Authorization': `Bearer ${store.accessToken}`,
       'Content-Type': 'application/octet-stream',
       'Dropbox-API-Arg': JSON.stringify({
         path: `/recipes/${fileId}${fileExtension}`,
