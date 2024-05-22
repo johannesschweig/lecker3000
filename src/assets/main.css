@@ -12,6 +12,10 @@
     @apply btn bg-slate-700 hover:bg-slate-500 active:bg-slate-500 text-white
   }
 
+  .btn-secondary {
+    @apply btn bg-slate-300 hover:bg-slate-500 active:bg-slate-500 text-black
+  }
+
   .btn-delete {
     @apply btn bg-red-700 hover:bg-red-500 active:bg-red-500 text-white
   }

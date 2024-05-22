@@ -1,8 +1,9 @@
 <template>
   <div>
     <p v-if="error">Error: {{ error }}</p>
-    <div v-else-if="accessToken">Access Token from store: {{ store.accessToken }}
-      <RouterLink class="text-xl block" to="/home">Go home</RouterLink>
+    <div v-else-if="accessToken">
+      <p>Access Token from store: {{ store.accessToken }}</p>
+      <RouterLink class="btn-primary mt-2 inline-block" to="/home">Proceed to app</RouterLink>
     </div>
     <p v-else>Loading...</p>
   </div>
@@ -22,7 +23,7 @@ const getAccessToken = async (code: string) => {
   try {
     const clientId = 'llz2w9825o8y2it';
     const clientSecret = import.meta.env.VITE_CLIENT_SECRET
-    const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : 'https://savory-cuisine.surge.sh/';
+    const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : 'https://savory-cuisine.surge.sh/redirect';
     const tokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
     const response = await axios.post(tokenUrl, null, {

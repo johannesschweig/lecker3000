@@ -1,30 +1,33 @@
 <template>
   <div class="mb-8">
+    <RouterLink to="/upload" class="btn-primary inline-block mb-4">+</RouterLink>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-      <RouterLink v-for="recipe in store.recipes" :to="`/recipe/${recipe.id}`">
-        <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-lg">
-        <div class="text-md">{{ recipe.name }}</div>
+      <RouterLink v-for="recipe in store.sortedRecipes" :to="`/recipe/${recipe.id}`" class="bg-slate-200 rounded-md">
+        <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-t-md">
+        <div class="text-lg mx-3 mb-2 mt-2">{{ recipe.name }}</div>
       </RouterLink>
-      <FileUpload class="col-span-2 md:col-span-1" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import FileUpload from '@/components/FileUpload.vue';
-import { useStore  } from '@/stores/index'
+import { useStore } from '@/stores/index'
 import { RouterLink } from 'vue-router';
 import { onMounted } from 'vue';
 
 const store = useStore()
 
 onMounted(async () => {
-  try {
-    await store.loadDataFromDropbox()
-    await store.loadThumbnails()
-    console.log('Loaded dropbox data and thumbnails successfully');
-  } catch (error) {
-    console.error('Error:', error);
+  const store = useStore()
+  // only load data if necessary
+  if (!store.thumbnailsLoaded && !store.dataLoaded) {
+    try {
+      await store.loadDataFromDropbox()
+      await store.loadThumbnails()
+      console.log('Loaded dropbox data and thumbnails successfully');
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 })
 </script>
