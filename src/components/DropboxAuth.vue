@@ -1,6 +1,9 @@
 <template>
-  <div class="mb-8">
-    <button class="btn-primary" @click="authenticateWithDropbox">Login with Dropbox</button>
+  <div class="mt-32 grid justify-center justify-items-center">
+    <div class="text-6xl font-semibold opacity-90 mb-2">Lecker</div>
+    <div class="text-5xl font-semibold opacity-90 mb-4">3000</div>
+    <div class="text-xl opacity-70 mb-8">A recipe app</div>
+    <button class="btn-lg btn-primary" @click="authenticateWithDropbox">Login with Dropbox</button>
   </div>
 </template>
 

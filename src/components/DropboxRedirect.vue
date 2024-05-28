@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <p v-if="error">Error: {{ error }}</p>
-    <div v-else-if="accessToken">
-      <p>Access Token from store: {{ store.accessToken }}</p>
-      <RouterLink class="btn-primary mt-2 inline-block" to="/home">Proceed to app</RouterLink>
-    </div>
-    <p v-else>Loading...</p>
+  <div class="mt-32 grid justify-center justify-items-center">
+    <div v-if="error">Error: {{ error }}</div>
+    <template v-else-if="accessToken">
+      <div>Access Token: {{ store.accessToken.slice(0,10) }}...</div>
+      <RouterLink class="btn-primary btn-lg mt-2 inline-block" to="/home">Proceed to app</RouterLink>
+    </template>
+    <div v-else>Loading...</div>
   </div>
 </template>
 

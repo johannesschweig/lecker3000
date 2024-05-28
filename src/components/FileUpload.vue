@@ -1,31 +1,47 @@
 <template>
   <div class="">
-    <div class="text-xl mb-2">New Recipe</div>
-    <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded px-4 py-4 border border-slate-500 w-full">
-
-    <div class="flex items-center justify-center w-full mb-2">
+    <div class="mb-4 flex gap-4">
+      <RouterLink to="/home" class="btn btn-secondary self-center">
+        << </RouterLink>
+          <div class="text-5xl opacity-90 self-center">New recipe</div>
+    </div>
+    <div class="flex gap-4 mb-2">
+      <div class="text-xl inline-block self-center">Name</div>
+      <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded px-4 py-4 border border-black grow">
+    </div>
+    <div class="text-xl mb-2">Image</div>
+    <div class="flex items-center justify-center w-full mb-4">
       <label for="dropzone-file"
-        class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 ">
+        class="flex flex-col items-center justify-center w-full h-64 border-2 border-black border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-100 ">
         <div>
           <div v-if="file" @click="removeFile">
-            <p class="text-md text-gray-500 ">x{{ file.name }}</p>
+            <p class="text-md opacity-90">x{{ file.name }}</p>
           </div>
           <div v-else class="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+            <svg class="w-8 h-8 mb-4 opacity-90 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 20 16">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
             </svg>
-            <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to upload</span> or
+            <p class="mb-2 text-sm opacity-90"><span class="font-semibold">Click to upload</span> or
               drag and drop</p>
-            <p class="text-xs text-gray-500 ">PNG, JPG or GIF</p>
+            <p class="text-xs opacity-90">PNG, JPG or GIF</p>
           </div>
         </div>
         <input id="dropzone-file" type="file" class="hidden" @change="handleFileUpload" />
       </label>
     </div>
 
-    <button :class='["btn-primary", "block", "w-full", "py-4", "text-center", { "bg-slate-300" : !file }]' @click="uploadFile">Upload</button>
+<!-- <div class="text-xl mb-2">Ingredients</div>
+    <textarea v-model="ingredients" placeholder="100g butter
+1kg flour" rows="5" class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea>
+    <div class="text-xl mb-2">Instructions</div>
+    <textarea v-model="instructions" placeholder="Crack the eggs open
+Boil the water" rows="5"
+      class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea> -->
+
+    <button :class='["btn", "btn-primary", "block", "w-full", "py-4", "text-center", { "opacity-50": !file }]'
+      @click="uploadFile">Upload</button>
   </div>
 </template>
 

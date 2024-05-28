@@ -1,9 +1,37 @@
 <template>
   <div>
-    <div class="text-2xl mb-4">{{ recipe.name }}</div>
+    <div class="mb-4 flex gap-4">
+      <RouterLink to="/home" class="btn btn-secondary self-center">
+        << </RouterLink>
+          <div lang="de" class="text-5xl opacity-90 self-center hypens-auto">{{ recipe.name }}</div>
+    </div>
     <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
-      class="rounded-lg mb-8 max-w-screen-md ">
-    <RouterLink to="/home" class="btn-delete" @click="deleteRecipe()">Delete recipe</RouterLink>
+      class="rounded-2xl border border-black mb-8">
+    <!-- <div class="mb-2">
+      <div class="text-2xl opacity-90 inline-block">Ingredients</div>
+      <button class="btn btn-secondary float-right">Edit</button>
+    </div>
+    <div class="opacity-90 mb-4">
+      <p>Lorem ipsum</p>
+      <p>Lorem ipsum</p>
+      <p>Lorem ipsum</p>
+      <p>Lorem ipsum</p>
+      <p>Lorem ipsum</p>
+      <p>Lorem ipsum</p>
+    </div>
+    <div class="mb-2">
+      <div class="text-2xl opacity-90 inline-block">Instructions</div>
+      <button class="btn btn-secondary float-right">Edit</button>
+    </div>
+    <ul class="list-decimal list-inside opacity-90 mb-4">
+      <li>Lorem ipsum</li>
+      <li>Lorem ipsum</li>
+      <li>Lorem ipsum</li>
+      <li>Lorem ipsum</li>
+      <li>Lorem ipsum</li>
+      <li>Lorem ipsum</li>
+    </ul> -->
+    <RouterLink to="/home" class="btn btn-delete" @click="deleteRecipe()">Delete recipe</RouterLink>
   </div>
 </template>
 

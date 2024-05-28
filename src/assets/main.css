@@ -5,18 +5,26 @@
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-lg
+    @apply px-4 py-1 rounded-2xl text-xl shadow inline-block
+  }
+
+  .btn-lg {
+    @apply btn px-6 py-2 text-2xl shadow inline-block
   }
 
   .btn-primary {
-    @apply btn bg-slate-700 hover:bg-slate-500 active:bg-slate-500 text-white
+    @apply bg-slate-900 border border-white hover:bg-slate-700 active:bg-slate-700 text-white
   }
 
   .btn-secondary {
-    @apply btn bg-slate-300 hover:bg-slate-500 active:bg-slate-500 text-black
+    @apply bg-white border border-black hover:bg-slate-200 active:bg-slate-200 text-black
   }
 
   .btn-delete {
-    @apply btn bg-red-700 hover:bg-red-500 active:bg-red-500 text-white
+    @apply bg-red-200 border border-black hover:bg-red-400 active:bg-red-400
+  }
+
+  .btn-add {
+    @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300
   }
 }
