@@ -15,7 +15,7 @@ export default defineComponent({
   methods: {
     authenticateWithDropbox() {
       const clientId = 'llz2w9825o8y2it';
-      const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : 'https://savory-cuisine.surge.sh/redirect'
+      const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : import.meta.env.VITE_REDIRECT_URL
       const authUrl = `https://www.dropbox.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
 
       window.location.href = authUrl;

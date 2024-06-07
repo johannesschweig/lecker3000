@@ -9,6 +9,7 @@
 - recipeview: long titles don't break
 - extract header as component
 - instruction and ingredients
+- changed url
 # v0.3.0
 - restyling app
 # v0.2.0
