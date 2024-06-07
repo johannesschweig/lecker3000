@@ -1,10 +1,6 @@
 <template>
   <div class="">
-    <div class="mb-4 flex gap-4">
-      <RouterLink to="/home" class="btn btn-secondary self-center">
-        << </RouterLink>
-          <div class="text-5xl opacity-90 self-center">New recipe</div>
-    </div>
+    <Header title="Add recipe" :back="true" :add="false"></Header>
     <div class="flex gap-4 mb-2">
       <div class="text-xl inline-block self-center">Name</div>
       <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded px-4 py-4 border border-black grow">
@@ -51,6 +47,7 @@ import { getRandomIdAndExtension } from '@/utils'
 import { ref } from 'vue';
 import { useStore } from '@/stores/index';
 import { useRouter } from 'vue-router';
+import Header from '@/components/Header.vue'
 
 const name = ref('')
 const store = useStore()

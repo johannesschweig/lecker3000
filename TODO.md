@@ -3,9 +3,11 @@
 - tailwind
   - improve shadow styling
   - remove/adapt line heights for text sizing
-- extract header as component
-- recipeview: long titles don't break
 
+# v0.4.0
+- reset scroll position after route change
+- recipeview: long titles don't break
+- extract header as component
 # v0.3.0
 - restyling app
 # v0.2.0

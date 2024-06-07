@@ -33,7 +33,16 @@ const router = createRouter({
       name: 'recipe',
       component: RecipeView,
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    // return { top: 10 }
+    const element = document.getElementById('app')
+    if (element) {
+      // element.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo(0, 0);
+    }
+
+  }
 })
 
 export default router

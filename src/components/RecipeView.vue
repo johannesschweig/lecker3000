@@ -1,10 +1,6 @@
 <template>
   <div>
-    <div class="mb-4 flex gap-4">
-      <RouterLink to="/home" class="btn btn-secondary self-center">
-        << </RouterLink>
-          <div lang="de" class="text-5xl opacity-90 self-center hypens-auto">{{ recipe.name }}</div>
-    </div>
+    <Header :title="recipe.name" :back="true" :add="false"></Header>
     <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
       class="rounded-2xl border border-black mb-8">
     <!-- <div class="mb-2">
@@ -39,6 +35,7 @@
 import { useStore } from '@/stores/index'
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import { computed } from 'vue';
+import Header from '@/components/Header.vue'
 
 const store = useStore()
 
