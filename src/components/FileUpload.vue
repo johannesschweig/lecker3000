@@ -28,13 +28,12 @@
       </label>
     </div>
 
-<!-- <div class="text-xl mb-2">Ingredients</div>
+    <div class="text-xl mb-2">Ingredients</div>
     <textarea v-model="ingredients" placeholder="100g butter
 1kg flour" rows="5" class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea>
-    <div class="text-xl mb-2">Instructions</div>
-    <textarea v-model="instructions" placeholder="Crack the eggs open
-Boil the water" rows="5"
-      class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea> -->
+    <div class="text-xl mb-2">Instruction</div>
+    <textarea v-model="instruction" placeholder="Crack the eggs open
+Boil the water" rows="5" class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea>
 
     <button :class='["btn", "btn-primary", "block", "w-full", "py-4", "text-center", { "opacity-50": !file }]'
       @click="uploadFile">Upload</button>
@@ -50,6 +49,8 @@ import { useRouter } from 'vue-router';
 import Header from '@/components/Header.vue'
 
 const name = ref('')
+const ingredients = ref('')
+const instruction = ref('')
 const store = useStore()
 const file = ref<File | null>(null)
 
@@ -86,7 +87,7 @@ const uploadFile = async () => {
       })
     };
     const response = await axios.post('https://content.dropboxapi.com/2/files/upload', file.value, { headers });
-    store.addRecipe({ id: fileId, name: name.value, extension: fileExtension })
+    store.addRecipe({ id: fileId, name: name.value, extension: fileExtension, ingredients: ingredients.value, instruction: instruction.value, })
 
     // Extracting the link to the uploaded file from the response
     uploadedImageUrl = response.data.path_display;

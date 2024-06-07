@@ -10,6 +10,13 @@ export interface Recipe {
   name: string, // display name
   extension: string, // either jpg or png
   thumbnail?: string,
+  ingredients: string,
+  instruction: string
+}
+
+export enum ContentType {
+  INSTRUCTION = 'instruction',
+  INGREDIENTS = 'ingredients',
 }
 
 export const useStore = defineStore('store',
@@ -32,6 +39,32 @@ export const useStore = defineStore('store',
       recipes.value.push(r)
       writeDataToDropbox()
       loadThumbnail(r)
+    }
+
+    function changeRecipe(id: string, contentType: ContentType, str: string) {
+      const recipe = recipes.value.find(r => r.id == id)
+      let changed = false
+      if (recipe) {
+        switch (contentType) {
+          case ContentType.INGREDIENTS:
+            if (recipe.ingredients != str) {
+              changed = true
+              recipe.ingredients = str
+              console.log("Changed ingredients to", str)
+            }
+            break
+          case ContentType.INSTRUCTION:
+            if (recipe.instruction != str) {
+              changed = true
+              recipe.instruction = str
+              console.log("Changed instruction to", str)
+            }
+            break
+        }
+      }
+      if (changed) {
+        writeDataToDropbox()
+      }
     }
 
     async function deleteRecipe(recipe: Recipe) {
@@ -63,8 +96,8 @@ export const useStore = defineStore('store',
           const newR = { ...r }; // Create a shallow copy of the original object
           delete newR['thumbnail']; // Remove the specified attribute from the new object
           return newR; // Return the modified object
-        });
-        const jsonData = JSON.stringify(exportRecipes);
+        })
+        const jsonData = JSON.stringify(exportRecipes)
 
         // Write the JSON data to Dropbox using the Dropbox API
         const headers = {
@@ -75,7 +108,7 @@ export const useStore = defineStore('store',
             mode: 'overwrite',
             // Overwrite the existing file
           })
-        };
+        }
         await axios.post('https://content.dropboxapi.com/2/files/upload',
           jsonData,
           { headers });
@@ -155,18 +188,6 @@ export const useStore = defineStore('store',
       }
     }
 
-    async function loadThumbnailsOld() {
-      try {
-        const promises = recipes.value.map((r) => loadThumbnail(r));
-        await Promise.all(promises)
-        thumbnailsLoaded.value = true
-      } catch (error) {
-        console.error('Error fetching uploaded files:',
-          error);
-        alert('An error occurred while fetching uploaded files. Please try again.');
-      }
-    }
-
     async function loadThumbnails() {
       const headers = {
         'Authorization': `Bearer ${accessToken.value}`,
@@ -216,6 +237,7 @@ export const useStore = defineStore('store',
       loadThumbnails,
       thumbnailsLoaded,
       accessToken,
-      setAccessToken
+      setAccessToken,
+      changeRecipe,
     }
   })

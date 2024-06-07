@@ -8,6 +8,7 @@
 - reset scroll position after route change
 - recipeview: long titles don't break
 - extract header as component
+- instruction and ingredients
 # v0.3.0
 - restyling app
 # v0.2.0
