@@ -18,7 +18,7 @@
   - remove/adapt line heights for text sizing
 
 # v0.5.0
-- added tags
+- added tags with dynamic tag colors
 - automatic redirect
 # v0.4.0
 - reset scroll position after route change
