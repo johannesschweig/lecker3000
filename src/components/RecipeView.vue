@@ -31,7 +31,7 @@ Boil the water" class="text-lg my-2 rounded px-4 py-4 border border-black w-full
     <div class="mb-8">
       <div class="text-2xl opacity-90 mb-2">Tags</div>
       <div>
-        <Pill v-for="pill in recipe.tags" class="mr-2" :name='pill' :recipeId='recipe.id' />
+        <Pill v-for="pill in recipe.tags" class="mr-2" :name='pill' :recipeId='recipe.id' :removable='true'/>
         <AddPill :recipeId='recipe.id' />
       </div>
     </div>  

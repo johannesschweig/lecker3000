@@ -9,7 +9,8 @@
       <RouterLink v-for="recipe in store.sortedRecipes" :to="`/recipe/${recipe.id}`"
         class="bg-white border border-black rounded-2xl p-2 shadow">
         <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-2xl border border-black mb-2">
-        <p lang="de" class="text-2xl ml-1 opacity-90 hyphens-auto">{{ recipe.name }}</p>
+        <p lang="de" class="text-2xl ml-1 mb-1 opacity-90 hyphens-auto">{{ recipe.name }}</p>
+        <Pill v-for='tag in recipe.tags' :name='tag' :recipeId='recipe.id' />
       </RouterLink>
     </div>
   </div>
@@ -20,6 +21,7 @@ import { useStore } from '@/stores/index'
 import { RouterLink } from 'vue-router';
 import { onMounted } from 'vue';
 import Header from '@/components/Header.vue'
+import Pill from '@/components/Pill.vue'
 
 const store = useStore()
 

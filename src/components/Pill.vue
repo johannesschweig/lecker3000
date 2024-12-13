@@ -1,11 +1,14 @@
 <template>
-  <div class='text-lg inline-block'>
+  <div v-if='removable' class='text-lg inline-block'>
     <div class='inline-block bg-blue-200 border-t border-b border-l border-black rounded-l-2xl pl-4 pr-2 py-1'>
       {{ formattedName }}
     </div>
     <div @click='removePill()' class='inline-block bg-blue-200 border border-black rounded-r-2xl pl-2 pr-3 py-1 hover:bg-blue-300 active:bg-blue-300 hover:cursor-pointer'>
       X
     </div>
+  </div>
+  <div v-else class='inline-block text-lg bg-blue-200 border border-black rounded-2xl px-4 py-1'>
+    {{ formattedName }}
   </div>
 </template>
 
@@ -14,7 +17,7 @@
 import { computed } from 'vue';
 import { useStore } from '@/stores/index'
 
-const props = defineProps(["name", "recipeId"]);
+const props = defineProps(["name", "recipeId", "removable"]);
 const store = useStore()
 
 const formattedName = computed(() => {
