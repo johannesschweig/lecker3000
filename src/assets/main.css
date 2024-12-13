@@ -13,7 +13,7 @@
   }
 
   .btn-primary {
-    @apply bg-slate-900 border border-white hover:bg-slate-700 active:bg-slate-700 text-white
+    @apply bg-slate-900 border hover:bg-slate-700 active:bg-slate-700 text-white
   }
 
   .btn-secondary {
@@ -27,4 +27,5 @@
   .btn-add {
     @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300
   }
+  
 }

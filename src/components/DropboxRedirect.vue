@@ -10,7 +10,6 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useStore } from '@/stores/index';
-import { RouterLink } from 'vue-router'
 import router from '@/router'
 
 const accessToken = ref<string>('');

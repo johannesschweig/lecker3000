@@ -11,7 +11,6 @@
 - pass recipe as prop to recipeview: maybe makes it easier
 - double \n\n are not rendered correctly with <p>
 - allow loading of more than 25 thumbnails (currently 17 recipes)
-- redirect from /redirect to /home
 - on error page: redirect to /home
 - check if accessToken -> else redirect to login /
 - tailwind

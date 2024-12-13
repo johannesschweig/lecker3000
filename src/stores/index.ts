@@ -11,12 +11,14 @@ export interface Recipe {
   extension: string, // either jpg or png
   thumbnail?: string,
   ingredients: string,
-  instruction: string
+  instruction: string,
+  tags: Array<string>
 }
 
 export enum ContentType {
   INSTRUCTION = 'instruction',
   INGREDIENTS = 'ingredients',
+  TAGS = 'tags',
 }
 
 export const useStore = defineStore('store',
@@ -40,8 +42,20 @@ export const useStore = defineStore('store',
       writeDataToDropbox()
       loadThumbnail(r)
     }
+    
+    function addTag(id: string, newTag: string) {
+      var newTags : Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
+      newTags.push(newTag)
+      changeRecipe(id, ContentType.TAGS, newTags)
+    }
+    
+    function removeTag(id: string, oldTag: string) {
+      var newTags : Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
+      newTags = newTags.filter(tag => tag != oldTag)
+      changeRecipe(id, ContentType.TAGS, newTags)
+    }
 
-    function changeRecipe(id: string, contentType: ContentType, str: string) {
+    function changeRecipe(id: string, contentType: ContentType, str: string | Array<string>) {
       const recipe = recipes.value.find(r => r.id == id)
       let changed = false
       if (recipe) {
@@ -49,17 +63,26 @@ export const useStore = defineStore('store',
           case ContentType.INGREDIENTS:
             if (recipe.ingredients != str) {
               changed = true
-              recipe.ingredients = str
+              if (typeof str === 'string')
+                recipe.ingredients = str
               console.log("Changed ingredients to", str)
             }
             break
           case ContentType.INSTRUCTION:
             if (recipe.instruction != str) {
               changed = true
-              recipe.instruction = str
+              if (typeof str === 'string')
+                recipe.instruction = str
               console.log("Changed instruction to", str)
             }
             break
+          case ContentType.TAGS:
+            if (recipe.tags != str) {
+              changed = true
+              if (typeof str != 'string')
+                recipe.tags = str
+              console.log("Changed tags to", str)
+            }
         }
       }
       if (changed) {
@@ -226,7 +249,7 @@ export const useStore = defineStore('store',
         return { thumbnail: '' }; // Return a default or empty value on error
       }
     }
-
+    
     return {
       recipes,
       sortedRecipes,
@@ -239,5 +262,7 @@ export const useStore = defineStore('store',
       accessToken,
       setAccessToken,
       changeRecipe,
+      addTag,
+      removeTag,
     }
   })
