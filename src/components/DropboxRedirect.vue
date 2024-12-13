@@ -1,11 +1,8 @@
 <template>
   <div class="mt-32 grid justify-center justify-items-center">
     <div v-if="error">Error: {{ error }}</div>
-    <template v-else-if="accessToken">
-      <div>Access Token: {{ store.accessToken.slice(0, 10) }}...</div>
-      <RouterLink class="btn-primary btn-lg mt-2 inline-block" to="/home">Proceed to app</RouterLink>
-    </template>
-    <div v-else>Loading...</div>
+    <div v-else-if="accessToken">Access Token received</div>
+    <div v-else>Going back to lecker3000...</div>
   </div>
 </template>
 
@@ -14,6 +11,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useStore } from '@/stores/index';
 import { RouterLink } from 'vue-router'
+import router from '@/router'
 
 const accessToken = ref<string>('');
 const error = ref<string>('');
@@ -41,6 +39,7 @@ const getAccessToken = async (code: string) => {
 
     accessToken.value = response.data.access_token;
     store.setAccessToken(response.data.access_token);
+    router.push('/home')
   } catch (err) {
     error.value = (err as Error).message;
   }
