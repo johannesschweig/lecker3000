@@ -21,3 +21,13 @@ export function getRandomIdAndExtension(fileName: string) {
     extension,
   }
 }
+
+const TAILWIND_COLORS = ['amber', 'blue', 'cyan', 'emerald', 'fuchsia', 'green', 'indigo', 'lime', 'orange', 'pink', 'purple', 'red', 'rose', 'sky', 'teal', 'violet', 'yellow' ]
+
+export function getTagColor(tag: string) {
+  let hash = 0;
+  for (let i = 0; i < tag.length; i++) {
+    hash = (hash + tag.charCodeAt(i) * i) % TAILWIND_COLORS.length;
+  }
+  return TAILWIND_COLORS[hash];
+}
