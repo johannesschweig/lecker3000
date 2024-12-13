@@ -87,7 +87,7 @@ const uploadFile = async () => {
       })
     };
     const response = await axios.post('https://content.dropboxapi.com/2/files/upload', file.value, { headers });
-    store.addRecipe({ id: fileId, name: name.value, extension: fileExtension, ingredients: ingredients.value, instruction: instruction.value, })
+    store.addRecipe({ id: fileId, name: name.value, extension: fileExtension, ingredients: ingredients.value, instruction: instruction.value, tags: [], })
 
     // Extracting the link to the uploaded file from the response
     uploadedImageUrl = response.data.path_display;

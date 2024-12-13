@@ -1,11 +1,11 @@
 # TODO
+- add tags in fileupload
 - option to change main image
   - option to change/add/rearrange multiple images
 - ingredients/instructions text size larger
 - option to change title
 - option to abort change when editing ingredients/instruction
 - delete recipe: dialogue
-- tags: Süß/Herzhaft
 - change language to German
 - secure client secret with pkce flow
 - pass recipe as prop to recipeview: maybe makes it easier

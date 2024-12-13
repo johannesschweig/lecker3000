@@ -27,11 +27,32 @@ export const useStore = defineStore('store',
     const accessToken = ref<String>('')
     const dataLoaded = ref<boolean>(false)
     const thumbnailsLoaded = ref<boolean>(false)
+    const filterTag = ref<string>('')
 
     const sortedRecipes = computed(() => {
-      return [...recipes.value].sort((a,
-        b) => a.name.localeCompare(b.name));
+      if (filterTag.value) {
+        return [...recipes.value].filter(recipe => recipe.tags.includes(filterTag.value)).sort((a,
+          b) => a.name.localeCompare(b.name));
+      } else {
+        return [...recipes.value].sort((a,
+          b) => a.name.localeCompare(b.name));
+      }
     })
+    
+    const getTags = computed(() => {
+      return [...new Set([...recipes.value].map(recipe => recipe.tags).flat(Infinity))]
+    })
+    
+    // set filter for tags on home view
+    function setFilter(str: string) {
+      if (filterTag.value === str) {
+        console.log('Showing all recipes')
+        filterTag.value = ''
+      } else {
+        console.log('Showing only', str, 'recipes')
+        filterTag.value = str
+      }
+    }
 
     function setAccessToken(t: string) {
       accessToken.value = t
@@ -252,6 +273,7 @@ export const useStore = defineStore('store',
     
     return {
       recipes,
+      filterTag,
       sortedRecipes,
       addRecipe,
       deleteRecipe,
@@ -264,5 +286,7 @@ export const useStore = defineStore('store',
       changeRecipe,
       addTag,
       removeTag,
+      setFilter,
+      getTags,
     }
   })

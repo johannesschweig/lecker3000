@@ -4,11 +4,17 @@
       title="Recipes"
       :back="false"
       :add="true"
-    ></Header>
+    />
+    <!-- Filter -->
+    <div class='mb-4'>
+      <span class='text-2xl mr-2'>Show:</span>
+      <Pill v-for='tag in store.getTags' :name='tag' :filterable='true' />
+    </div>
+    <!-- List -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
       <RouterLink v-for="recipe in store.sortedRecipes" :to="`/recipe/${recipe.id}`"
         class="bg-white border border-black rounded-2xl p-2 shadow">
-        <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-2xl border border-black mb-2">
+        <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-xl border border-black mb-2">
         <p lang="de" class="text-2xl ml-1 mb-1 opacity-90 hyphens-auto">{{ recipe.name }}</p>
         <Pill v-for='tag in recipe.tags' :name='tag' :recipeId='recipe.id' />
       </RouterLink>
