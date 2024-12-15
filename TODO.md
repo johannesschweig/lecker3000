@@ -10,15 +10,17 @@
   - button text will be long :(
 - improve shadow styling: hard drop shadow
 - remove/adapt line heights for text sizing
+- double line breaks \n\n are not rendered correctly with <p>.
 
 - Investigate: pass recipe as prop to recipeview: maybe makes it easier
   - https://router.vuejs.org/guide/essentials/passing-props
 - add tags in fileupload
 - option to change/add/rearrange multiple images
 - secure client secret with pkce flow
-- double \n\n are not rendered correctly with <p>. Where?
 - on error page: redirect to /home. when does this happen?
 - check if accessToken -> else redirect to login /
+
+- disable save button if no change
 
 # v0.6.0
 - tag text not selectable
