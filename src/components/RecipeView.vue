@@ -16,7 +16,8 @@
       </div>
     </div>  
     <div>
-      <RouterLink to="/home" class="btn btn-delete" @click="deleteRecipe()">Delete recipe</RouterLink>
+      <!-- <RouterLink to="/home" class="btn btn-delete" @click="deleteRecipe()" @mousedown="pressing()">Delete recipe</RouterLink> -->
+      <button id='delete' class="btn" @mousedown="pressing()">Delete recipe</button>
     </div>
   </div>
 </template>
@@ -39,7 +40,28 @@ const recipe = computed(() => {
   return r ? r : { id: '123', name: 'ERROR', extension: 'ERROR', ingredients: 'ERROR', instruction: 'ERRROR', tags: [] }
 })
 const deleteRecipe = async () => {
-  store.deleteRecipe(recipe.value)
-  router.push({ name: 'home' })
+  // store.deleteRecipe(recipe.value)
+  // router.push({ name: 'home' })
+}
+
+const pressing = () => {
+  console.log('pressing')
 }
 </script>
+
+<style scoped>
+#delete {
+  transition: all ease 4s;
+  /* background: linear-gradient(to left, red 50%, blue 50%) right; */
+  /* background-size: 200% 100%; */
+  background-color: #ffe0e0;
+  box-shadow: inset 0 0 0 0 #31302B;
+  user-select: none;
+}
+
+#delete:active {
+  /* background-color: #ff0000; */
+  /* background-position: left; */
+  box-shadow: inset 100px 0 0 0 #ff0000;
+}
+</style>
