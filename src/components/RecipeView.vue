@@ -4,9 +4,9 @@
     <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
       class="rounded-2xl border border-black mb-8">
     <!-- Ingredients -->
-    <Ingredients :recipeId='recipe.id' :initialContent='recipe.ingredients'/>
+    <Content :recipeId='recipe.id' :initialContent='recipe.ingredients' :contentType='ContentType.INGREDIENTS'/>
     <!-- Instruction -->
-    <Instruction :recipeId='recipe.id' :instruction='recipe.instruction'/>
+    <Content :recipeId='recipe.id' :initialContent='recipe.instruction' :contentType='ContentType.INSTRUCTION'/>
     <!-- Tags -->
     <div class="mb-8">
       <div class="text-2xl opacity-90 mb-2">Tags</div>
@@ -22,14 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '@/stores/index'
+import { useStore, ContentType  } from '@/stores/index'
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import { computed } from 'vue';
 import Header from '@/components/Header.vue'
 import Pill from '@/components/Pill.vue'
 import AddPill from '@/components/AddPill.vue'
-import Ingredients from '@/components/Ingredients.vue'
-import Instruction from '@/components/Instruction.vue'
+import Content from '@/components/Content.vue'
 
 const store = useStore()
 

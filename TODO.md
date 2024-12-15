@@ -1,5 +1,4 @@
 # TODO
-- option to abort change when editing ingredients/instruction
 - delete recipe: dialogue or long press
 - allow loading of more than 25 thumbnails (currently 17 recipes)
 
@@ -23,6 +22,7 @@
 - disable save button if no change
 
 # v0.6.0
+- option to abort change when editing ingredients/instruction
 - tag text not selectable
 - 1 column layout mobile
 - ingredients/instructions text size larger text-lg
