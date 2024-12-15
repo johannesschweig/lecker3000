@@ -247,7 +247,7 @@ export const useStore = defineStore('store',
           size: 'w1024h768',
         }))
       }
-
+      // TODO add another loop for +25 images
       try {
         const response = await axios.post('https://content.dropboxapi.com/2/files/get_thumbnail_batch', data, { headers })
 

@@ -1,8 +1,4 @@
 # TODO
-- delete recipe: dialogue or long press
-- allow loading of more than 25 thumbnails (currently 17 recipes)
-
-- change images to be squared, cover fit
 - option to change main image
 - option to change title
 - change language to German
@@ -11,18 +7,24 @@
 - remove/adapt line heights for text sizing
 - double line breaks \n\n are not rendered correctly with <p>.
 
+- delete recipe: dialogue or long press
+  - difficult with animation, ugly with dialog
 - Investigate: pass recipe as prop to recipeview: maybe makes it easier
   - https://router.vuejs.org/guide/essentials/passing-props
 - add tags in fileupload
 - option to change/add/rearrange multiple images
 - secure client secret with pkce flow
-- on error page: redirect to /home. when does this happen?
+- refresh of a recipe page should be possible without leading to an error page
+  - on error page: redirect to /home. 
 - check if accessToken -> else redirect to login /
+- allow loading of more than 25 thumbnails (currently 17 recipes)
 
 - disable save button if no change
+- thumbnail images on home page take long to load (5s, w480 4s)
 
 # v0.6.0
 - option to abort change when editing ingredients/instruction
+- change images to be squared, cover fit
 - tag text not selectable
 - 1 column layout mobile
 - ingredients/instructions text size larger text-lg
