@@ -9,7 +9,7 @@
       <button :class="['btn', editIngredients ? 'btn-primary' : 'btn-secondary', 'float-right']"
         @click="changeRecipe(ContentType.INGREDIENTS)">{{ editIngredients ? "Save" : "Edit" }}</button>
     </div>
-    <div class="opacity-90 mb-4">
+    <div class="opacity-90 mb-4 text-lg">
       <textarea v-if="editIngredients" rows="10" v-model="ingredients" placeholder="100g butter
 1kg flour" class="text-lg my-2 rounded px-4 py-4 border border-black w-full"></textarea>
       <div v-else>
@@ -24,7 +24,7 @@
     </div>
     <textarea v-if="editInstruction" rows="10" v-model="instruction" placeholder="Crack the eggs open
 Boil the water" class="text-lg my-2 rounded px-4 py-4 border border-black w-full"></textarea>
-    <ul v-else class="list-decimal list-inside opacity-90 mb-4">
+    <ul v-else class="list-decimal list-inside opacity-90 mb-4 text-lg">
       <li v-for="instruc in instruction?.split('\n')"> {{ instruc }}</li>
     </ul>
     <!-- Tags -->

@@ -2,7 +2,7 @@
   <div class="mt-32 grid justify-center justify-items-center">
     <div v-if="error">Error: {{ error }}</div>
     <div v-else-if="accessToken">Access Token received</div>
-    <div v-else>Going back to lecker3000...</div>
+    <div v-else>Redirecting to lecker3000...</div>
   </div>
 </template>
 

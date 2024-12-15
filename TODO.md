@@ -1,21 +1,29 @@
 # TODO
-- add tags in fileupload
-- option to change main image
-  - option to change/add/rearrange multiple images
-- ingredients/instructions text size larger
-- option to change title
 - option to abort change when editing ingredients/instruction
-- delete recipe: dialogue
-- change language to German
-- secure client secret with pkce flow
-- pass recipe as prop to recipeview: maybe makes it easier
-- double \n\n are not rendered correctly with <p>
+- delete recipe: dialogue or long press
 - allow loading of more than 25 thumbnails (currently 17 recipes)
-- on error page: redirect to /home
+
+- change images to be squared, cover fit
+- option to change main image
+- option to change title
+- change language to German
+  - button text will be long :(
+- improve shadow styling: hard drop shadow
+- remove/adapt line heights for text sizing
+
+- Investigate: pass recipe as prop to recipeview: maybe makes it easier
+  - https://router.vuejs.org/guide/essentials/passing-props
+- add tags in fileupload
+- option to change/add/rearrange multiple images
+- secure client secret with pkce flow
+- double \n\n are not rendered correctly with <p>. Where?
+- on error page: redirect to /home. when does this happen?
 - check if accessToken -> else redirect to login /
-- tailwind
-  - improve shadow styling
-  - remove/adapt line heights for text sizing
+
+# v0.6.0
+- tag text not selectable
+- 1 column layout mobile
+- ingredients/instructions text size larger text-lg
 
 # v0.5.0
 - added tags with dynamic tag colors
@@ -34,3 +42,5 @@
 - new file upload flow
 # v0.1.0
 - implemented oauth2 flow
+
+# DROPPED
