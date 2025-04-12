@@ -272,7 +272,7 @@ async function loadThumbnails() {
         }
       }
     }
-
+    thumbnailsLoaded.value = true
     console.log('Thumbnails loaded successfully');
     return { thumbnail: 'success' };
   } catch (error) {
