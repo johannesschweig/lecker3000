@@ -9,14 +9,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { generatePKCECodes } from '@/utils';
 
 export default defineComponent({
   name: 'DropboxAuth',
   methods: {
-    authenticateWithDropbox() {
-      const clientId = 'llz2w9825o8y2it';
+    async authenticateWithDropbox() {
+      const clientId = import.meta.env.VITE_CLIENT_ID;
       const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : import.meta.env.VITE_REDIRECT_URL
-      const authUrl = `https://www.dropbox.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
+
+      const { codeVerifier, codeChallenge } = await generatePKCECodes();
+
+      const authUrl = `https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&code_challenge=${codeChallenge}&code_challenge_method=S256&token_access_type=offline`;
+
+      localStorage.setItem('dropbox_code_verifier', codeVerifier);
 
       window.location.href = authUrl;
     }

@@ -8,49 +8,61 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
 import { useStore } from '@/stores/index';
-import router from '@/router'
+import router from '@/router';
 
 const accessToken = ref<string>('');
 const error = ref<string>('');
 const store = useStore();
 
-const getAccessToken = async (code: string) => {
+const getAccessToken = async (code: string, codeVerifier: string) => {
   try {
-    const clientId = 'llz2w9825o8y2it';
-    const clientSecret = import.meta.env.VITE_CLIENT_SECRET
-    const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : import.meta.env.VITE_REDIRECT_URL
+    const clientId = import.meta.env.VITE_CLIENT_ID
+    const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' 
+      ? 'http://localhost:5173/redirect' 
+      : import.meta.env.VITE_REDIRECT_URL;
+
     const tokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
-    const response = await axios.post(tokenUrl, null, {
-      params: {
+    const response = await fetch(tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
         code: code,
         grant_type: 'authorization_code',
         client_id: clientId,
-        client_secret: clientSecret,
-        redirect_uri: redirectUri
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+        redirect_uri: redirectUri,
+        code_verifier: codeVerifier,
+      }),
     });
 
-    accessToken.value = response.data.access_token;
-    store.setAccessToken(response.data.access_token);
-    router.push('/home')
+    const data = await response.json();
+
+    if (data.access_token) {
+      localStorage.setItem('dropbox_access_token', data.access_token);
+      localStorage.setItem('dropbox_refresh_token', data.refresh_token);
+      localStorage.setItem('dropbox_token_expires', (Date.now() + data.expires_in * 1000).toString());
+
+      router.push('/home');
+    } else {
+      throw new Error(data.error_description || 'Failed to retrieve access token.');
+    }
   } catch (err) {
     error.value = (err as Error).message;
   }
 };
 
 onMounted(async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code');
-  if (code) {
-    await getAccessToken(code);
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const codeVerifier = localStorage.getItem('dropbox_code_verifier');
+
+  if (code && codeVerifier) {
+    await getAccessToken(code, codeVerifier);
   } else {
-    error.value = 'No authorization code found.';
+    error.value = 'No authorization code or code verifier found.';
   }
 });
 </script>

@@ -4,6 +4,7 @@ import {
 } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios';
+import { getValidAccessToken } from '@/utils'
 
 export interface Recipe {
   id: string, // id of recipe, random 8 char string
@@ -24,7 +25,6 @@ export enum ContentType {
 export const useStore = defineStore('store',
   () => {
     const recipes = ref<Recipe[]>([])
-    const accessToken = ref<String>('')
     const dataLoaded = ref<boolean>(false)
     const thumbnailsLoaded = ref<boolean>(false)
     const filterTag = ref<string>('')
@@ -52,10 +52,6 @@ export const useStore = defineStore('store',
         console.log('Showing only', str, 'recipes')
         filterTag.value = str
       }
-    }
-
-    function setAccessToken(t: string) {
-      accessToken.value = t
     }
 
     function addRecipe(r: Recipe) {
@@ -114,10 +110,11 @@ export const useStore = defineStore('store',
     async function deleteRecipe(recipe: Recipe) {
       recipes.value = recipes.value.filter(r => r.id !== recipe.id)
       writeDataToDropbox()
+      const accessToken = await getValidAccessToken();
 
       try {
         const headers = {
-          'Authorization': `Bearer ${accessToken.value}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
         }
 
@@ -134,6 +131,8 @@ export const useStore = defineStore('store',
     }
 
     async function writeDataToDropbox() {
+      const accessToken = await getValidAccessToken();
+
       try {
         // Convert the data to JSON
         const exportRecipes = recipes.value.map(r => {
@@ -145,7 +144,7 @@ export const useStore = defineStore('store',
 
         // Write the JSON data to Dropbox using the Dropbox API
         const headers = {
-          'Authorization': `Bearer ${accessToken.value}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/octet-stream',
           'Dropbox-API-Arg': JSON.stringify({
             path: '/recipes.json',
@@ -165,10 +164,12 @@ export const useStore = defineStore('store',
     }
 
     async function loadDataFromDropbox() {
+      const accessToken = await getValidAccessToken();
+
       try {
         // Fetch the JSON data from Dropbox using the Dropbox API
         const headers = {
-          'Authorization': `Bearer ${accessToken.value}`,
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json',
           'Dropbox-API-Arg': JSON.stringify({
             path: '/recipes.json',
@@ -192,8 +193,10 @@ export const useStore = defineStore('store',
     }
 
     async function loadThumbnail(recipe: Recipe) {
+      const accessToken = await getValidAccessToken();
+
       const headers = {
-        'Authorization': `Bearer ${accessToken.value}`,
+        'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
         'Dropbox-API-Arg': JSON.stringify({
           resource: {
@@ -233,8 +236,10 @@ export const useStore = defineStore('store',
     }
 
 async function loadThumbnails() {
+  const accessToken = await getValidAccessToken();
+
   const headers = {
-    'Authorization': `Bearer ${accessToken.value}`,
+    'Authorization': `Bearer ${accessToken}`,
     'Content-Type': 'application/json',
   };
 
@@ -291,8 +296,6 @@ async function loadThumbnails() {
       dataLoaded,
       loadThumbnails,
       thumbnailsLoaded,
-      accessToken,
-      setAccessToken,
       changeRecipe,
       addTag,
       removeTag,
