@@ -1,31 +1,46 @@
 /* ./src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer components {
-  .btn {
-    @apply px-4 py-1 rounded-2xl text-xl shadow inline-block
-  }
+@config '../../tailwind.config.js';
 
-  .btn-lg {
-    @apply btn px-6 py-2 text-2xl shadow inline-block
-  }
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
 
-  .btn-primary {
-    @apply bg-slate-900 border hover:bg-slate-700 active:bg-slate-700 text-white
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
+}
 
-  .btn-secondary {
-    @apply bg-white border border-black hover:bg-slate-200 active:bg-slate-200 text-black
-  }
+@utility btn {
+  @apply px-4 py-1 rounded-2xl text-xl shadow-sm inline-block;
+}
 
-  .btn-delete {
-    @apply bg-red-200 border border-black hover:bg-red-400 active:bg-red-400
-  }
+@utility btn-lg {
+  @apply btn px-6 py-2 text-2xl shadow-sm inline-block;
+}
 
-  .btn-add {
-    @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300
-  }
-  
+@utility btn-primary {
+  @apply bg-slate-900 border hover:bg-slate-700 active:bg-slate-700 text-white;
+}
+
+@utility btn-secondary {
+  @apply bg-white border border-black hover:bg-slate-200 active:bg-slate-200 text-black;
+}
+
+@utility btn-delete {
+  @apply bg-red-200 border border-black hover:bg-red-400 active:bg-red-400;
+}
+
+@utility btn-add {
+  @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300;
 }

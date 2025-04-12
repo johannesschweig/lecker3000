@@ -10,7 +10,7 @@
         @click="edit()">Edit</button>
     </div>
     <div class="opacity-90 mb-4 text-lg">
-      <textarea v-if="editing" rows="10" v-model="content" :placeholder='placeholder' class="my-2 rounded px-4 py-4 border border-black w-full"></textarea>
+      <textarea v-if="editing" rows="10" v-model="content" :placeholder='placeholder' class="my-2 rounded-sm px-4 py-4 border border-black w-full"></textarea>
       <div v-else-if="contentType === ContentType.INGREDIENTS">
         <p v-for="ingredient in content?.split('\n')"> {{ ingredient }}</p>
       </div>

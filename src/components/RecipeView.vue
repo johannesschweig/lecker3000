@@ -1,9 +1,9 @@
 <template>
   <div v-if="recipe.id !== '123'">
     <div class="animate-pulse">
-      <div class="w-96 h-12 bg-slate-200 rounded mb-2"></div>
-      <div class="w-5xl h-3xl bg-slate-200 rounded mb-8"></div>
-      <div class="w-96 h-12 bg-slate-200 rounded mb-2"></div>
+      <div class="w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-5xl h-3xl bg-slate-200 rounded-sm mb-8"></div>
+      <div class="w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
     </div>
   </div>
   <div v-else>

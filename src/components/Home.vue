@@ -13,7 +13,7 @@
     <!-- List -->
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
       <RouterLink v-for="recipe in store.sortedRecipes" :to="`/recipe/${recipe.id}`"
-        class="bg-white border border-black rounded-2xl p-2 shadow">
+        class="bg-white border border-black rounded-2xl p-2 shadow-sm">
         <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name" class="rounded-xl border border-black mb-2 aspect-square object-cover">
         <p lang="de" class="text-2xl ml-1 mb-1 opacity-90 hyphens-auto">{{ recipe.name }}</p>
         <Pill v-for='tag in recipe.tags' :name='tag' :recipeId='recipe.id' />

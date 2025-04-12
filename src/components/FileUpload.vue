@@ -3,7 +3,7 @@
     <Header title="Add recipe" :back="true" :add="false"></Header>
     <div class="flex gap-4 mb-2">
       <div class="text-xl inline-block self-center">Name</div>
-      <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded px-4 py-4 border border-black grow">
+      <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded-sm px-4 py-4 border border-black grow">
     </div>
     <div class="text-xl mb-2">Image</div>
     <div class="flex items-center justify-center w-full mb-4">
@@ -30,10 +30,10 @@
 
     <div class="text-xl mb-2">Ingredients</div>
     <textarea v-model="ingredients" placeholder="100g butter
-1kg flour" rows="5" class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea>
+1kg flour" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-black grow"></textarea>
     <div class="text-xl mb-2">Instruction</div>
     <textarea v-model="instruction" placeholder="Crack the eggs open
-Boil the water" rows="5" class="w-full mb-4 rounded px-4 py-4 border border-black grow"></textarea>
+Boil the water" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-black grow"></textarea>
 
     <button :class='["btn", "btn-primary", "block", "w-full", "py-4", "text-center", { "opacity-50": !file }]'
       @click="uploadFile">Upload</button>
