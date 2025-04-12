@@ -232,44 +232,54 @@ export const useStore = defineStore('store',
       }
     }
 
-    async function loadThumbnails() {
-      const headers = {
-        'Authorization': `Bearer ${accessToken.value}`,
-        'Content-Type': 'application/json',
-      }
+async function loadThumbnails() {
+  const headers = {
+    'Authorization': `Bearer ${accessToken.value}`,
+    'Content-Type': 'application/json',
+  };
 
-      const data = {
-        entries: recipes.value.map((recipe) => ({
-          format: recipe.extension === '.png' ? 'png' : 'jpeg',
-          mode: "strict",
-          path: `/recipes/${recipe.id}${recipe.extension}`,
-          quality: "quality_80",
-          size: 'w1024h768',
-        }))
-      }
-      // TODO add another loop for +25 images
-      try {
-        const response = await axios.post('https://content.dropboxapi.com/2/files/get_thumbnail_batch', data, { headers })
+  const batchSize = 25; // Dropbox API limit
+  const totalRecipes = recipes.value.length;
 
-        for (let i = 0; i < response.data.entries.length; i++) {
-          const fileName = response.data.entries[i].metadata.name
-          // extract id from fileName
-          const id = fileName.lastIndexOf('.') === -1 ? fileName : fileName.substring(0, fileName.lastIndexOf('.'))
-          const matchingRecipe = recipes.value.find((r) => r.id === id);
-          if (matchingRecipe) {
-            matchingRecipe.thumbnail = `data:image/jpeg;base64,${response.data.entries[i].thumbnail}`
-          }
+  try {
+    for (let start = 0; start < totalRecipes; start += batchSize) {
+      const batch = recipes.value.slice(start, start + batchSize).map((recipe) => ({
+        format: recipe.extension === '.png' ? 'png' : 'jpeg',
+        mode: "strict",
+        path: `/recipes/${recipe.id}${recipe.extension}`,
+        quality: "quality_80",
+        size: 'w1024h768',
+      }));
+
+      const data = { entries: batch };
+
+      const response = await axios.post(
+        'https://content.dropboxapi.com/2/files/get_thumbnail_batch',
+        data,
+        { headers }
+      );
+
+      for (let i = 0; i < response.data.entries.length; i++) {
+        const fileName = response.data.entries[i].metadata.name;
+        // Extract id from fileName
+        const id =
+          fileName.lastIndexOf('.') === -1
+            ? fileName
+            : fileName.substring(0, fileName.lastIndexOf('.'));
+        const matchingRecipe = recipes.value.find((r) => r.id === id);
+        if (matchingRecipe) {
+          matchingRecipe.thumbnail = `data:image/jpeg;base64,${response.data.entries[i].thumbnail}`;
         }
-
-        return {
-          // thumbnail,
-          thumbnail: response.data
-        };
-      } catch (error) {
-        console.error('Error fetching thumbnail:', error);
-        return { thumbnail: '' }; // Return a default or empty value on error
       }
     }
+
+    console.log('Thumbnails loaded successfully');
+    return { thumbnail: 'success' };
+  } catch (error) {
+    console.error('Error fetching thumbnails:', error);
+    return { thumbnail: '' };
+  }
+}
     
     return {
       recipes,

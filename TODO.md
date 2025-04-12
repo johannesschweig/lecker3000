@@ -17,11 +17,10 @@
 - refresh of a recipe page should be possible without leading to an error page
   - on error page: redirect to /home. 
 - check if accessToken -> else redirect to login /
-- allow loading of more than 25 thumbnails (currently 17 recipes)
-
 - disable save button if no change
-- thumbnail images on home page take long to load (5s, w480 4s)
 
+# v0.7.0
+- allow loading of more than 25 thumbnails (currently 17 recipes)
 # v0.6.0
 - option to abort change when editing ingredients/instruction
 - change images to be squared, cover fit
@@ -48,3 +47,5 @@
 - implemented oauth2 flow
 
 # DROPPED
+- thumbnail images on home page take long to load (5s, w480 4s)
+  - also smaller widths are not faster
