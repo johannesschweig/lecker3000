@@ -13,13 +13,12 @@
   - https://router.vuejs.org/guide/essentials/passing-props
 - add tags in fileupload
 - option to change/add/rearrange multiple images
-- secure client secret with pkce flow
-- refresh of a recipe page should be possible without leading to an error page
-  - on error page: redirect to /home. 
-- check if accessToken -> else redirect to login /
 - disable save button if no change
+- refresh of a recipe page should be possible without leading to an error page
 
 # v0.7.0
+- secure client secret with pkce flow
+  - check if accessToken -> else redirect to login /
 - allow loading of more than 25 thumbnails (currently 17 recipes)
 # v0.6.0
 - option to abort change when editing ingredients/instruction
