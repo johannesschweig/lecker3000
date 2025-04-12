@@ -1,9 +1,24 @@
 <template>
-  <div v-if="recipe.id !== '123'">
+  <div v-if="recipe.id === '123'">
     <div class="animate-pulse">
-      <div class="w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
-      <div class="w-5xl h-3xl bg-slate-200 rounded-sm mb-8"></div>
-      <div class="w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-full md:w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-full md:w-[1000px] h-48 md:h-[800px] bg-slate-200 rounded-sm mb-8"></div>
+      <div class="w-24 h-8 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-4"></div>
+
+      <div class="w-24 h-8 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="w-32 h-6 bg-slate-200 rounded-sm mb-4"></div>
+
+      <div class="w-24 h-8 bg-slate-200 rounded-sm mb-2"></div>
+      <div class="flex gap-2 mb-8">
+        <div class="w-24 h-9 bg-slate-200 rounded-sm mb-2"></div>
+        <div class="w-24 h-9 bg-slate-200 rounded-sm mb-2"></div>
+      </div>
+      <div class="w-36 h-9 bg-slate-200 rounded-sm mb-2"></div>
     </div>
   </div>
   <div v-else>

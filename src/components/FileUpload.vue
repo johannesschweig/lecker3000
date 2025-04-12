@@ -42,7 +42,7 @@ Boil the water" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-b
 
 <script setup lang="ts">
 import axios from 'axios';
-import { getRandomIdAndExtension } from '@/utils'
+import { getRandomIdAndExtension, getValidAccessToken } from '@/utils'
 import { ref } from 'vue';
 import { useStore } from '@/stores/index';
 import { useRouter } from 'vue-router';
@@ -74,10 +74,11 @@ const uploadFile = async () => {
     return;
   }
   const { id: fileId, extension: fileExtension } = getRandomIdAndExtension(file.value.name)
+  const accessToken = await getValidAccessToken();
 
   try {
     const headers = {
-      'Authorization': `Bearer ${store.accessToken}`,
+      'Authorization': `Bearer ${accessToken}`,
       'Content-Type': 'application/octet-stream',
       'Dropbox-API-Arg': JSON.stringify({
         path: `/recipes/${fileId}${fileExtension}`,

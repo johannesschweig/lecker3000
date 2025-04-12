@@ -1,4 +1,7 @@
 # TODO
+- safelist.txt source -200 -300
+- skeleton loading home page
+
 - option to change main image
 - option to change title
 - change language to German
