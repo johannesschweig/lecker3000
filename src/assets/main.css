@@ -22,11 +22,11 @@
 }
 
 @utility btn {
-  @apply px-4 py-1 rounded-2xl text-xl shadow-sm inline-block;
+  @apply px-4 py-1 rounded-2xl text-xl brutalist-drop inline-block disabled:opacity-50;
 }
 
 @utility btn-lg {
-  @apply btn px-6 py-2 text-2xl shadow-sm inline-block;
+  @apply btn px-6 py-2 text-2xl brutalist-drop inline-block;
 }
 
 @utility btn-primary {
@@ -43,4 +43,8 @@
 
 @utility btn-add {
   @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300;
+}
+
+@utility brutalist-drop {
+  @apply drop-shadow-[2px_2px_0px_#000];
 }

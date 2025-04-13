@@ -4,15 +4,15 @@
       <div class="text-2xl opacity-90 inline-block">{{ contentType === ContentType.INGREDIENTS ? "Ingredients" : "Instruction"}}</div>
       <div v-if='editing' class="float-right">
         <button class="btn btn-secondary mr-2" @click="cancel()">Cancel</button>
-        <button class="btn btn-primary" @click="change()">Save</button>
+        <button class="btn btn-primary" :disabled='content === savedContent' @click="change()">Save</button>
       </div>
       <button v-else class="btn btn-secondary float-right"
         @click="edit()">Edit</button>
     </div>
     <div class="opacity-90 mb-4 text-lg">
-      <textarea v-if="editing" rows="10" v-model="content" :placeholder='placeholder' class="my-2 rounded-sm px-4 py-4 border border-black w-full"></textarea>
+      <textarea v-if="editing" :rows="content?.split('\n').length + 1" v-model="content" :placeholder='placeholder' class="my-2 rounded-sm px-4 py-4 border border-black w-full"></textarea>
       <div v-else-if="contentType === ContentType.INGREDIENTS">
-        <p v-for="ingredient in content?.split('\n')"> {{ ingredient }}</p>
+        <p v-for="ingredient in content?.split('\n')" class="min-h-6"> {{ ingredient }}</p>
       </div>
       <ul v-else class="list-decimal list-inside">
         <li v-for="instruc in content?.split('\n')"> {{ instruc }}</li>

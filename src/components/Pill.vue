@@ -12,7 +12,7 @@
     @click='filter()'
     class='inline-block text-base md:text-lg border border-black rounded-2xl px-3 py-[2px] md:px-4 md:py-1 mr-2 hover:cursor-pointer select-none'
     :class="props.name === store.filterTag 
-        ? [`bg-${bgColor}-300`, 'border-2', `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`] 
+        ? [`bg-${bgColor}-300`, 'brutalist-drop', `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`] 
         : [`bg-${bgColor}-200`, `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`]">
     {{ formattedName }}
   </div>
