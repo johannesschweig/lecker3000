@@ -22,7 +22,7 @@ export function getRandomIdAndExtension(fileName: string) {
   }
 }
 
-const TAILWIND_COLORS = ['amber', 'blue', 'cyan', 'emerald', 'fuchsia', 'green', 'indigo', 'lime', 'orange', 'pink', 'purple', 'red', 'rose', 'sky', 'teal', 'violet', 'yellow' ]
+const TAILWIND_COLORS = [ 'amber', 'blue', 'cyan', 'emerald', 'fuchsia', 'green', 'indigo', 'lime', 'orange', 'pink', 'purple', 'red', 'rose', 'sky', 'teal', 'violet', 'yellow' ]
 
 export function getTagColor(tag: string) {
   let hash = 0;

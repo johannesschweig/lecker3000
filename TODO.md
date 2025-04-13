@@ -1,5 +1,4 @@
 # TODO
-- safelist.txt source -200 -300
 - skeleton loading home page
 
 - option to change main image
@@ -20,6 +19,7 @@
 - refresh of a recipe page should be possible without leading to an error page
 
 # v0.7.0
+- safelist.txt source -200 -300
 - secure client secret with pkce flow
   - check if accessToken -> else redirect to login /
 - allow loading of more than 25 thumbnails (currently 17 recipes)
