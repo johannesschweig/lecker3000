@@ -1,5 +1,5 @@
 <template>
-  <div v-if='removable' class='text-lg inline-block mr-2 select-none'>
+  <div v-if='removable' class='text-base md:text-lg inline-block mr-2 select-none'>
     <div class='inline-block border-t border-b border-l border-black rounded-l-2xl pl-4 pr-2 py-1' :class='`bg-${bgColor}-200`'>
       {{ formattedName }}
     </div>
@@ -10,13 +10,13 @@
   <div
     v-else-if='filterable'
     @click='filter()'
-    class='inline-block text-lg border border-black rounded-2xl px-4 py-1 mr-2 hover:cursor-pointer select-none'
+    class='inline-block text-base md:text-lg border border-black rounded-2xl px-3 py-[2px] md:px-4 md:py-1 mr-2 hover:cursor-pointer select-none'
     :class="props.name === store.filterTag 
         ? [`bg-${bgColor}-300`, 'border-2', `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`] 
         : [`bg-${bgColor}-200`, `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`]">
     {{ formattedName }}
   </div>
-  <div v-else class='inline-block text-lg border border-black rounded-2xl px-4 py-1 mr-2 select-none' :class='`bg-${bgColor}-200`'>
+  <div v-else class='inline-block text-base md:text-lg border border-black rounded-2xl px-3 py-[2px] md:px-4 md:py-1 mr-2 select-none' :class='`bg-${bgColor}-200`'>
     {{ formattedName }}
   </div>
 </template>
