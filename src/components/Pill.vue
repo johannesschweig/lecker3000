@@ -3,16 +3,16 @@
     <div class='inline-block border-t border-b border-l border-black rounded-l-2xl pl-4 pr-2 py-1' :class='`bg-${bgColor}-200`'>
       {{ formattedName }}
     </div>
-    <div @click='removePill()' class='inline-block border border-black rounded-r-2xl pl-2 pr-3 py-1 hover:cursor-pointer'  :class='`bg-${bgColor}-200 hover:bg-${bgColor}-300 active:bg-${bgColor}-300`'>
+    <div @click='removePill()' class='inline-block border border-black rounded-r-2xl pl-2 pr-3 py-1 cursor-pointer'  :class='`bg-${bgColor}-200 hover:bg-${bgColor}-300 active:bg-${bgColor}-300`'>
       X
     </div>
   </div>
   <div
     v-else-if='filterable'
     @click='filter()'
-    class='inline-block text-base md:text-lg border border-black rounded-2xl px-3 py-[2px] md:px-4 md:py-1 mr-2 hover:cursor-pointer select-none'
+    class='inline-block text-base md:text-lg border border-black rounded-2xl px-3 py-[2px] md:px-4 md:py-1 mr-2 cursor-pointer select-none transition hover:-translate-[1px] hover:brutalist-drop-1 active:-translate-[2px] active:brutalist-drop-2'
     :class="props.name === store.filterTag 
-        ? [`bg-${bgColor}-300`, 'brutalist-drop', `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`] 
+        ? [`bg-${bgColor}-300`, `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`, 'brutalist-drop-2 -translate-[1px]'] 
         : [`bg-${bgColor}-200`, `hover:bg-${bgColor}-300`, `active:bg-${bgColor}-300`]">
     {{ formattedName }}
   </div>

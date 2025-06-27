@@ -16,7 +16,7 @@ export default defineComponent({
   methods: {
     async authenticateWithDropbox() {
       const clientId = import.meta.env.VITE_CLIENT_ID;
-      const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' ? 'http://localhost:5173/redirect' : import.meta.env.VITE_REDIRECT_URL
+      const redirectUri = import.meta.env.VITE_REDIRECT_URL
 
       const { codeVerifier, codeChallenge } = await generatePKCECodes();
 

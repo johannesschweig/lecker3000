@@ -1,8 +1,11 @@
 # TODO
+- add option to add ingredient to todoist
 - add tags in fileupload
 - option to change main image
   - option to change/add/rearrange multiple images
 - option to change title
+- animations for buttons and tags with shadow, normal and pressed
+- add option in fileupload to create from url via AI
 
 - delete recipe: dialogue or long press
   - difficult with animation, ugly with dialog

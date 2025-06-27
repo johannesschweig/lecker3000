@@ -1,5 +1,6 @@
 # my edits
 .env
+.env.production
 res/
 
 # Logs

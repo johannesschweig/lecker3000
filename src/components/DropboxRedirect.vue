@@ -18,10 +18,7 @@ const store = useStore();
 const getAccessToken = async (code: string, codeVerifier: string) => {
   try {
     const clientId = import.meta.env.VITE_CLIENT_ID
-    const redirectUri = import.meta.env.VITE_ENVIRONMENT === 'dev' 
-      ? 'http://localhost:5173/redirect' 
-      : import.meta.env.VITE_REDIRECT_URL;
-
+    const redirectUri = import.meta.env.VITE_REDIRECT_URL
     const tokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
     const response = await fetch(tokenUrl, {

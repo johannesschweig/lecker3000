@@ -3,34 +3,17 @@
 
 @config '../../tailwind.config.js';
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
 @utility btn {
-  @apply px-4 py-1 rounded-2xl text-xl brutalist-drop inline-block disabled:opacity-50;
+  @apply cursor-pointer px-4 py-1 rounded-2xl text-xl brutalist-drop-1 inline-block disabled:opacity-50;
+  @apply transition hover:-translate-[1px] hover:brutalist-drop-2 active:translate-[2px] active:brutalist-drop-none;
 }
 
 @utility btn-lg {
-  @apply btn px-6 py-2 text-2xl brutalist-drop inline-block;
+  @apply btn px-6 py-2 text-2xl inline-block;
 }
 
 @utility btn-primary {
-  @apply bg-slate-900 border hover:bg-slate-700 active:bg-slate-700 text-white;
+  @apply bg-amber-100 border border-black hover:bg-amber-400 active:bg-amber-400 text-black;
 }
 
 @utility btn-secondary {
@@ -45,6 +28,14 @@
   @apply bg-emerald-100 border border-black hover:bg-emerald-300 active:bg-emerald-300;
 }
 
-@utility brutalist-drop {
+@utility brutalist-drop-2 {
   @apply drop-shadow-[2px_2px_0px_#000];
+}
+
+@utility brutalist-drop-1 {
+  @apply drop-shadow-[1px_1px_0px_#000];
+}
+
+@utility brutalist-drop-none {
+  @apply drop-shadow-none;
 }
