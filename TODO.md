@@ -1,15 +1,16 @@
 # TODO
-- add option to add ingredient to todoist
-- add tags in fileupload
 - option to change main image
-  - option to change/add/rearrange multiple images
+- add tags in fileupload
 - option to change title
-- animations for buttons and tags with shadow, normal and pressed
-- add option in fileupload to create from url via AI
 
+
+- add option in fileupload to create from url via AI
+- add option to add ingredient to todoist
 - delete recipe: dialogue or long press
   - difficult with animation, ugly with dialog
 
+# 0.8.0
+- animations for buttons and tags with shadow, normal and pressed
 # v0.7.0
 - double line breaks \n\n are not rendered correctly with <p>.
 - disable save button if no change
@@ -45,6 +46,8 @@
 - implemented oauth2 flow
 
 # DROPPED
+- option to change/add/rearrange multiple images
+  - not for now
 - thumbnail images on home page take long to load (5s, w480 4s)
   - also smaller widths are not faster
 - change language to German

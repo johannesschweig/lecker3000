@@ -16,7 +16,7 @@
       <!-- List -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
         <RouterLink v-for="recipe in store.sortedRecipes" :to="`/recipe/${recipe.id}`"
-          class="bg-white border border-black rounded-2xl p-1 brutalist-drop-1">
+          class="bg-white border border-black rounded-2xl p-1 brutalist-drop-1 transition hover:-translate-[1px] hover:brutalist-drop-2 active:translate-[2px] active:brutalist-drop-none">
           <img :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
             class="rounded-xl border-black mb-2 aspect-square object-cover">
           <p lang="de" class="text-xl md:text-2xl ml-1 mb-1 opacity-90 hyphens-auto">{{ recipe.name }}</p>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    
+
   </div>
 </template>
 
