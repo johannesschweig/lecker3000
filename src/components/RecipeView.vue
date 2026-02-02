@@ -1,4 +1,5 @@
 <template>
+  <!-- skeleton loading -->
   <div v-if="recipe.id === '123'">
     <div class="animate-pulse">
       <div class="w-full md:w-96 h-12 bg-slate-200 rounded-sm mb-2"></div>
@@ -23,8 +24,13 @@
   </div>
   <div v-else>
     <Header :title="recipe.name" :back="true" :add="false"></Header>
+    <!-- Image -->
     <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
-      class="rounded-2xl border border-black mb-8">
+      class="rounded-2xl border border-black mb-2">
+    <div class="flex justify-end mb-8">
+      <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="onFileChanged" />
+      <button class="btn btn-secondary" @click='$refs.fileInput.click()'>Change image</button>
+    </div>
     <!-- Ingredients -->
     <Content :recipeId='recipe.id' :initialContent='recipe.ingredients' :contentType='ContentType.INGREDIENTS' />
     <!-- Instruction -->
@@ -53,15 +59,25 @@ import Header from '@/components/Header.vue'
 import Pill from '@/components/Pill.vue'
 import AddPill from '@/components/AddPill.vue'
 import Content from '@/components/Content.vue'
+import { ref } from 'vue';
 
 const store = useStore()
 
 const route = useRoute();
 const router = useRouter();
+const fileInput = ref<HTMLInputElement | null>(null);
 const recipe = computed(() => {
   const r = store.recipes.find(r => r.id === route.params.id)
   return r ? r : { id: '123', name: 'Loading...', extension: 'Loading...', ingredients: 'Loading...', instruction: 'Loading...', tags: [] }
 })
+
+const onFileChanged = async (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files[0]) {
+    const file = target.files[0];
+    await store.updateRecipeImage(recipe.value.id, file);
+  }
+};
 const deleteRecipe = async () => {
   store.deleteRecipe(recipe.value)
   router.push({ name: 'home' })

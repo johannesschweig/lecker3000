@@ -38,11 +38,11 @@ export const useStore = defineStore('store',
           b) => a.name.localeCompare(b.name));
       }
     })
-    
+
     const getTags = computed(() => {
       return [...new Set([...recipes.value].map(recipe => recipe.tags).flat(Infinity))]
     })
-    
+
     // set filter for tags on home view
     function setFilter(str: string) {
       if (filterTag.value === str) {
@@ -59,15 +59,15 @@ export const useStore = defineStore('store',
       writeDataToDropbox()
       loadThumbnail(r)
     }
-    
+
     function addTag(id: string, newTag: string) {
-      var newTags : Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
+      var newTags: Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
       newTags.push(newTag)
       changeRecipe(id, ContentType.TAGS, newTags)
     }
-    
+
     function removeTag(id: string, oldTag: string) {
-      var newTags : Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
+      var newTags: Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
       newTags = newTags.filter(tag => tag != oldTag)
       changeRecipe(id, ContentType.TAGS, newTags)
     }
@@ -127,6 +127,39 @@ export const useStore = defineStore('store',
       } catch (error) {
         console.error('Error uploading file to Dropbox:', error);
         alert('An error occurred while uploading the file. Please try again.');
+      }
+    }
+
+    async function updateRecipeImage(id: string, file: File) {
+      const accessToken = await getValidAccessToken();
+      const extension = file.name.substring(file.name.lastIndexOf('.'));
+      const recipe = recipes.value.find(r => r.id === id);
+
+      if (!recipe) return;
+
+      try {
+        // 1. Upload to Dropbox
+        const headers = {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/octet-stream',
+          'Dropbox-API-Arg': JSON.stringify({
+            path: `/recipes/${id}${extension}`,
+            mode: 'overwrite',
+          })
+        };
+
+        await axios.post('https://content.dropboxapi.com/2/files/upload', file, { headers });
+
+        // 2. Update local store state
+        recipe.extension = extension;
+        recipe.thumbnail = window.URL.createObjectURL(file);
+
+        // 3. Update the JSON database file so the extension change is saved
+        await writeDataToDropbox();
+
+        console.log('Image updated successfully');
+      } catch (error) {
+        console.error('Upload failed:', error);
       }
     }
 
@@ -235,57 +268,57 @@ export const useStore = defineStore('store',
       }
     }
 
-async function loadThumbnails() {
-  const accessToken = await getValidAccessToken();
+    async function loadThumbnails() {
+      const accessToken = await getValidAccessToken();
 
-  const headers = {
-    'Authorization': `Bearer ${accessToken}`,
-    'Content-Type': 'application/json',
-  };
+      const headers = {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      };
 
-  const batchSize = 25; // Dropbox API limit
-  const totalRecipes = recipes.value.length;
+      const batchSize = 25; // Dropbox API limit
+      const totalRecipes = recipes.value.length;
 
-  try {
-    for (let start = 0; start < totalRecipes; start += batchSize) {
-      const batch = recipes.value.slice(start, start + batchSize).map((recipe) => ({
-        format: recipe.extension === '.png' ? 'png' : 'jpeg',
-        mode: "strict",
-        path: `/recipes/${recipe.id}${recipe.extension}`,
-        quality: "quality_80",
-        size: 'w1024h768',
-      }));
+      try {
+        for (let start = 0; start < totalRecipes; start += batchSize) {
+          const batch = recipes.value.slice(start, start + batchSize).map((recipe) => ({
+            format: recipe.extension === '.png' ? 'png' : 'jpeg',
+            mode: "strict",
+            path: `/recipes/${recipe.id}${recipe.extension}`,
+            quality: "quality_80",
+            size: 'w1024h768',
+          }));
 
-      const data = { entries: batch };
+          const data = { entries: batch };
 
-      const response = await axios.post(
-        'https://content.dropboxapi.com/2/files/get_thumbnail_batch',
-        data,
-        { headers }
-      );
+          const response = await axios.post(
+            'https://content.dropboxapi.com/2/files/get_thumbnail_batch',
+            data,
+            { headers }
+          );
 
-      for (let i = 0; i < response.data.entries.length; i++) {
-        const fileName = response.data.entries[i].metadata.name;
-        // Extract id from fileName
-        const id =
-          fileName.lastIndexOf('.') === -1
-            ? fileName
-            : fileName.substring(0, fileName.lastIndexOf('.'));
-        const matchingRecipe = recipes.value.find((r) => r.id === id);
-        if (matchingRecipe) {
-          matchingRecipe.thumbnail = `data:image/jpeg;base64,${response.data.entries[i].thumbnail}`;
+          for (let i = 0; i < response.data.entries.length; i++) {
+            const fileName = response.data.entries[i].metadata.name;
+            // Extract id from fileName
+            const id =
+              fileName.lastIndexOf('.') === -1
+                ? fileName
+                : fileName.substring(0, fileName.lastIndexOf('.'));
+            const matchingRecipe = recipes.value.find((r) => r.id === id);
+            if (matchingRecipe) {
+              matchingRecipe.thumbnail = `data:image/jpeg;base64,${response.data.entries[i].thumbnail}`;
+            }
+          }
         }
+        thumbnailsLoaded.value = true
+        console.log('Thumbnails loaded successfully');
+        return { thumbnail: 'success' };
+      } catch (error) {
+        console.error('Error fetching thumbnails:', error);
+        return { thumbnail: '' };
       }
     }
-    thumbnailsLoaded.value = true
-    console.log('Thumbnails loaded successfully');
-    return { thumbnail: 'success' };
-  } catch (error) {
-    console.error('Error fetching thumbnails:', error);
-    return { thumbnail: '' };
-  }
-}
-    
+
     return {
       recipes,
       filterTag,
@@ -301,5 +334,6 @@ async function loadThumbnails() {
       removeTag,
       setFilter,
       getTags,
+      updateRecipeImage,
     }
   })
