@@ -20,6 +20,7 @@ export enum ContentType {
   INSTRUCTION = 'instruction',
   INGREDIENTS = 'ingredients',
   TAGS = 'tags',
+  NAME = 'name',
 }
 
 export const useStore = defineStore('store',
@@ -100,6 +101,12 @@ export const useStore = defineStore('store',
                 recipe.tags = str
               console.log("Changed tags to", str)
             }
+          case ContentType.NAME:
+            if (recipe.name != str && typeof str === 'string') {
+              recipe.name = str;
+              changed = true;
+            }
+            break;
         }
       }
       if (changed) {

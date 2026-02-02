@@ -23,13 +23,13 @@
     </div>
   </div>
   <div v-else>
-    <Header :title="recipe.name" :back="true" :add="false"></Header>
+    <Header :title="recipe.name" :back="true" :add="false" :recipeId="String(route.params.id)"></Header>
     <!-- Image -->
     <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
       class="rounded-2xl border border-black mb-2">
     <div class="flex justify-end mb-8">
       <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="onFileChanged" />
-      <button class="btn btn-secondary" @click='$refs.fileInput.click()'>Change image</button>
+      <button class="btn btn-secondary" @click='fileInput?.click()'>Change image</button>
     </div>
     <!-- Ingredients -->
     <Content :recipeId='recipe.id' :initialContent='recipe.ingredients' :contentType='ContentType.INGREDIENTS' />

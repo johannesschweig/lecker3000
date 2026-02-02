@@ -1,15 +1,13 @@
 # TODO
-- option to change main image
-- add tags in fileupload
-- option to change title
-
-
 - add option in fileupload to create from url via AI
 - add option to add ingredient to todoist
 - delete recipe: dialogue or long press
   - difficult with animation, ugly with dialog
 
 # 0.8.0
+- option to change title
+- option to change main image
+- add tags in fileupload
 - animations for buttons and tags with shadow, normal and pressed
 # v0.7.0
 - double line breaks \n\n are not rendered correctly with <p>.
