@@ -1,7 +1,9 @@
 <template>
   <div v-if="back" class="mb-4 grid grid-cols-[64px_1fr] gap-2 items-center">
-    <RouterLink v-if="props.back" to="/home" class="btn btn-secondary place-self-center"> << </RouterLink>
-    <Content :recipeId="props.recipeId" :initialContent="props.title" :contentType="ContentType.NAME" />
+    <RouterLink v-if="props.back" to="/home" class="btn btn-secondary place-self-center">
+      << </RouterLink>
+        <Content v-if="editable" :recipeId="props.recipeId" :initialContent="props.title" :contentType="ContentType.NAME" />
+        <span v-else lang="de" class="text-4xl md:text-5xl opacity-90 hyphens-auto">{{ props.title }}</span>
   </div>
   <div v-else class="mb-4">
     <span lang="de" class="text-4xl md:text-5xl opacity-90 hyphens-auto">{{ props.title }}</span>
@@ -11,7 +13,7 @@
 
 <script setup lang="ts">
 import Content from '@/components/Content.vue';
-import { ContentType } from '@/stores/index';
+import { ContentType } from '@/constants';
 
 const props = defineProps({
   title: {
@@ -24,6 +26,10 @@ const props = defineProps({
     default: ''
   },
   back: Boolean,
-  add: Boolean
+  add: Boolean,
+  editable: {
+    type: Boolean,
+    default: false
+  }
 })
 </script>

@@ -39,3 +39,7 @@
 @utility brutalist-drop-none {
   @apply drop-shadow-none;
 }
+
+@utility input-field {
+  @apply border rounded-full px-4 py-2 bg-white border-black focus:outline-none focus:brutalist-drop-1;
+}

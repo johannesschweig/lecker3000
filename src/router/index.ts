@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/components/Home.vue'
 import RecipeView from '@/components/RecipeView.vue'
-import DropboxRedirect from '@/components/DropboxRedirect.vue'
-import DropboxAuth from '@/components/DropboxAuth.vue'
+import Login from '@/components/Login.vue'
 import FileUpload from '@/components/FileUpload.vue'
+import { useStore } from '@/stores'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,17 +11,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'login',
-      component: DropboxAuth,
+      component: Login,
     },
     {
       path: '/home',
       name: 'home',
       component: Home,
-    },
-    {
-      path: '/redirect',
-      name: 'DropboxRedirect',
-      component: DropboxRedirect,
     },
     {
       path: '/upload',
@@ -43,6 +38,20 @@ const router = createRouter({
     }
 
   }
+})
+
+router.beforeEach(async (to) => {
+  // 1. Skip if going to login
+  if (to.path === '/login') return true
+
+  const store = useStore()
+
+  // 2. Only fetch if we haven't loaded data yet
+  if (!store.dataLoaded) {
+    await store.fetchRecipes()
+  }
+
+  return true
 })
 
 export default router

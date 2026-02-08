@@ -16,16 +16,16 @@
       <button v-else class="btn btn-secondary" @click="edit()">Edit</button>
     </div>
     <div class="opacity-90 text-lg" :class="contentType !== ContentType.NAME ? 'mb-4' : ''">
-      <textarea v-if="editing && contentType !== ContentType.NAME" :rows="content?.split('\n').length + 1"
+      <textarea v-if="editing && contentType !== ContentType.NAME" :rows="content?.split(/\r?\n|\\n/).length + 1"
         v-model="content" :placeholder='placeholder'
         class="my-2 rounded-sm px-4 py-4 border border-black w-full"></textarea>
       <input v-else-if="editing && contentType === ContentType.NAME" v-model="content"
         class="text-3xl border-b border-black w-full outline-none" />
       <div v-else-if="contentType === ContentType.INGREDIENTS">
-        <p v-for="ingredient in content?.split('\n')" class="min-h-6"> {{ ingredient }}</p>
+        <p v-for="ingredient in content?.split(/\r?\n|\\n/)" class="min-h-6"> {{ ingredient }}</p>
       </div>
       <ul v-else-if="!editing && contentType === ContentType.INSTRUCTION" class="list-decimal list-inside">
-        <li v-for="instruc in content?.split('\n')"> {{ instruc }}</li>
+        <li v-for="instruc in content?.split(/\r?\n|\\n/)"> {{ instruc }}</li>
       </ul>
     </div>
   </div>
@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import type { PropType } from 'vue'
-import { ContentType } from '@/stores/index'
+import { ContentType } from '@/constants'
 import { useStore } from '@/stores/index'
 
 const editing = ref<Boolean>(false)
@@ -81,6 +81,6 @@ const cancel = () => {
 }
 
 onMounted(async () => {
-  content.value = props.initialContent
+  content.value = props.initialContent.replace(/\\n/g, '\n')
 })
 </script>

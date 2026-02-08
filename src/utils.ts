@@ -1,3 +1,5 @@
+import type { Recipe } from '@/constants';
+
 // returns a random string of a given length
 function createRandomString(length: number) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -22,7 +24,7 @@ export function getRandomIdAndExtension(fileName: string) {
   }
 }
 
-const TAILWIND_COLORS = [ 'amber', 'blue', 'cyan', 'emerald', 'fuchsia', 'green', 'indigo', 'lime', 'orange', 'pink', 'purple', 'red', 'rose', 'sky', 'teal', 'violet', 'yellow' ]
+const TAILWIND_COLORS = ['amber', 'blue', 'cyan', 'emerald', 'fuchsia', 'green', 'indigo', 'lime', 'orange', 'pink', 'purple', 'red', 'rose', 'sky', 'teal', 'violet', 'yellow']
 
 export function getTagColor(tag: string) {
   let hash = 0;
@@ -107,4 +109,41 @@ export async function getValidAccessToken(): Promise<string> {
   localStorage.setItem('dropbox_token_expires', (Date.now() + data.expires_in * 1000).toString());
 
   return data.access_token;
+}
+
+// Utility to resize image before upload
+export async function resizeImage(file: File, maxWidth = 1200): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const scale = maxWidth / img.width;
+
+        if (scale >= 1) {
+          resolve(file);
+          return;
+        }
+
+        canvas.width = maxWidth;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error('Canvas to Blob failed'));
+        }, 'image/jpeg', 0.85);
+      };
+    };
+  });
+}
+
+export function getThumbnailUrl(recipe: Recipe, width = 300) {
+  if (!recipe.image_url) return ''
+  return `${recipe.image_url}?width=${width}&resize=cover`
 }

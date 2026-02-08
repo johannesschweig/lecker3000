@@ -23,10 +23,10 @@
     </div>
   </div>
   <div v-else>
-    <Header :title="recipe.name" :back="true" :add="false" :recipeId="String(route.params.id)"></Header>
+    <Header :title="recipe.name" :back="true" :add="false" :recipeId="String(route.params.id)" :editable="true" />
     <!-- Image -->
-    <img v-if='recipe.thumbnail' :key="recipe.id" :src="recipe.thumbnail" :alt="recipe.name"
-      class="rounded-2xl border border-black mb-2">
+    <img v-if='recipe.image_url' :key="recipe.id" :src="recipe.image_url" :alt="recipe.name"
+      class="rounded-2xl border border-black mb-2 md:max-w-2xl lg:max-w-3xl">
     <div class="flex justify-end mb-8">
       <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="onFileChanged" />
       <button class="btn btn-secondary" @click='fileInput?.click()'>Change image</button>
@@ -45,9 +45,10 @@
 </template>
 
 <script setup lang="ts">
-import { useStore, ContentType } from '@/stores/index'
+import { useStore } from '@/stores/index'
+import { ContentType } from '@/constants';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 import Header from '@/components/Header.vue'
 import Content from '@/components/Content.vue'
 import { ref } from 'vue';
@@ -69,27 +70,15 @@ const onFileChanged = async (event: Event) => {
     const file = target.files[0];
     await store.updateRecipeImage(recipe.value.id, file);
   }
-};
+}
+
 const deleteRecipe = async () => {
   store.deleteRecipe(recipe.value)
   router.push({ name: 'home' })
 }
 
 const updateTags = async (newTags: string[]) => {
-  store.updateRecipeTags(recipe.value.id, newTags)
+  store.changeRecipe(recipe.value.id, ContentType.TAGS, newTags)
 }
 
-onMounted(async () => {
-  const store = useStore()
-  // only load data if necessary
-  if (!store.thumbnailsLoaded && !store.dataLoaded) {
-    try {
-      await store.loadDataFromDropbox()
-      await store.loadThumbnails()
-      console.log('Loaded dropbox data and thumbnails successfully');
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  }
-})
 </script>
