@@ -27,7 +27,28 @@ import { computed } from 'vue';
 import { useStore } from '@/stores/index'
 import { getTagColor } from '@/utils'
 
-const props = defineProps(["name", "recipeId", "removable", "filterable"]);
+const props = defineProps(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    recipeId: {
+      type: String,
+    },
+    removable: {
+      type: Boolean,
+      default: false,
+    },
+    filterable: {
+      type: Boolean,
+      default: false,
+    },
+    click: {
+      type: Function,
+    }
+  }
+)
 const store = useStore()
 
 const formattedName = computed(() => {
@@ -39,7 +60,11 @@ const bgColor = computed(() => {
 })
 
 const removePill = () => {
-  store.removeTag(props.recipeId, props.name)
+  if (props.click) {
+    props.click(props.name)
+  } else if (props.recipeId) {
+    store.removeTag(props.recipeId, props.name)
+  }
 }
 
 const filter = () => {

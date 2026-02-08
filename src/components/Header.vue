@@ -21,7 +21,6 @@ const props = defineProps({
   },
   recipeId: {
     type: String,
-    required: true,
     default: ''
   },
   back: Boolean,

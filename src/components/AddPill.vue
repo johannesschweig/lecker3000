@@ -14,7 +14,16 @@ import { useStore } from '@/stores/index'
 const editing = ref<Boolean>(false)
 const newTag = ref<string>('')
 const store = useStore()
-const props = defineProps(["recipeId", "click"]);
+const props = defineProps(
+  {
+    recipeId: {
+      type: String,
+    },
+    click: {
+      type: Function,
+    }
+  }
+);
 
 const addTag = async () => {
   if (newTag.value) {

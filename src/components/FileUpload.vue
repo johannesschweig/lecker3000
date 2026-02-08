@@ -38,9 +38,9 @@ Boil the water" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-b
 
     <!-- Tags -->
     <div class="text-xl mb-2">Tags</div>
-    <AddPill class="mb-2" :recipeId="null" :click="addTag" />
+    <AddPill class="mb-2" :click="addTag" />
     <div class="flex flex-wrap gap-1 mb-4">
-      <Pill v-for="tag in tags" :name="tag" :removable="true"/>
+      <Pill v-for="tag in tags" :name="tag" :removable="true" :click="removeTag"/>
     </div>
 
     <button :class='["btn", "btn-primary", "block", "w-full", "py-4", "text-center", { "opacity-50": !file }]'
@@ -56,7 +56,7 @@ import { useStore } from '@/stores/index';
 import { useRouter } from 'vue-router';
 import Header from '@/components/Header.vue'
 import Pill from '@/components/Pill.vue';
-import AddPill from './AddPill.vue';
+import AddPill from '@/components/AddPill.vue';
 
 const name = ref('')
 const ingredients = ref('')
@@ -72,6 +72,10 @@ const addTag = (tag: string) => {
   if (tag && !tags.value.includes(tag)) {
     tags.value.push(tag.toLowerCase());
   }
+}
+
+const removeTag = (tag: string) => {
+  tags.value = tags.value.filter(t => t !== tag)
 }
 
 const handleFileUpload = (event: Event) => {
