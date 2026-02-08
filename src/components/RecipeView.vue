@@ -36,15 +36,8 @@
     <!-- Instruction -->
     <Content :recipeId='recipe.id' :initialContent='recipe.instruction' :contentType='ContentType.INSTRUCTION' />
     <!-- Tags -->
-    <div class="mb-8">
-      <div class="text-2xl opacity-90 mb-2">Tags</div>
-      <div>
-        <Pill v-for="pill in recipe.tags" class="mr-2" :name='pill' :recipeId='recipe.id' :removable='true' />
-        <AddPill :recipeId='recipe.id' />
-      </div>
-    </div>
-    <div>
-    </div>
+    <PillContent :initialTags="recipe.tags" :onSave="updateTags" class="mb-8"/>
+    
     <div>
       <RouterLink to="/home" class="btn btn-delete" @click="deleteRecipe()">Delete recipe</RouterLink>
     </div>
@@ -56,10 +49,9 @@ import { useStore, ContentType } from '@/stores/index'
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import { computed, onMounted } from 'vue';
 import Header from '@/components/Header.vue'
-import Pill from '@/components/Pill.vue'
-import AddPill from '@/components/AddPill.vue'
 import Content from '@/components/Content.vue'
 import { ref } from 'vue';
+import PillContent from '@/components/PillContent.vue';
 
 const store = useStore()
 
@@ -81,6 +73,10 @@ const onFileChanged = async (event: Event) => {
 const deleteRecipe = async () => {
   store.deleteRecipe(recipe.value)
   router.push({ name: 'home' })
+}
+
+const updateTags = async (newTags: string[]) => {
+  store.updateRecipeTags(recipe.value.id, newTags)
 }
 
 onMounted(async () => {

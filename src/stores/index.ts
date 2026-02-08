@@ -41,7 +41,7 @@ export const useStore = defineStore('store',
     })
 
     const getTags = computed(() => {
-      return [...new Set([...recipes.value].map(recipe => recipe.tags).flat(Infinity))]
+      return [...new Set(recipes.value.flatMap(recipe => recipe.tags))];
     })
 
     // set filter for tags on home view
@@ -70,6 +70,10 @@ export const useStore = defineStore('store',
     function removeTag(id: string, oldTag: string) {
       var newTags: Array<string> = recipes.value.filter(recipe => recipe.id === id)[0].tags.slice()
       newTags = newTags.filter(tag => tag != oldTag)
+      changeRecipe(id, ContentType.TAGS, newTags)
+    }
+
+    function updateRecipeTags(id: string, newTags: Array<string>) {
       changeRecipe(id, ContentType.TAGS, newTags)
     }
 
@@ -130,7 +134,7 @@ export const useStore = defineStore('store',
         }
 
         await axios.post('https://api.dropboxapi.com/2/files/delete_v2', data, { headers });
-        console.log(`File successfully deleted${recipe.id}${recipe.extension}`)
+        console.log(`File successfully deleted ${recipe.id}${recipe.extension}`)
       } catch (error) {
         console.error('Error uploading file to Dropbox:', error);
         alert('An error occurred while uploading the file. Please try again.');
@@ -342,5 +346,6 @@ export const useStore = defineStore('store',
       setFilter,
       getTags,
       updateRecipeImage,
+      updateRecipeTags,
     }
   })

@@ -5,7 +5,7 @@
       <div class="text-xl inline-block self-center">Name</div>
       <input v-model="name" placeholder="Name" class="text-lg mb-2 rounded-sm px-4 py-4 border border-black grow">
     </div>
-    <div class="text-xl mb-2">Image</div>
+    <div class="text-2xl mb-2">Image</div>
     <div class="flex items-center justify-center w-full mb-4">
       <label for="dropzone-file"
         class="flex flex-col items-center justify-center w-full h-64 border-2 border-black border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-100 ">
@@ -29,19 +29,15 @@
     </div>
 
     <!-- Ingredients & Instruction -->
-    <div class="text-xl mb-2">Ingredients</div>
+    <div class="text-2xl mb-2">Ingredients</div>
     <textarea v-model="ingredients" placeholder="100g butter
 1kg flour" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-black grow"></textarea>
-    <div class="text-xl mb-2">Instruction</div>
+    <div class="text-2xl mb-2">Instruction</div>
     <textarea v-model="instruction" placeholder="Crack the eggs open
 Boil the water" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-black grow"></textarea>
 
     <!-- Tags -->
-    <div class="text-xl mb-2">Tags</div>
-    <AddPill class="mb-2" :click="addTag" />
-    <div class="flex flex-wrap gap-1 mb-4">
-      <Pill v-for="tag in tags" :name="tag" :removable="true" :click="removeTag"/>
-    </div>
+    <PillContent :onSave="setTags" class="mb-2"/>
 
     <button :class='["btn", "btn-primary", "block", "w-full", "py-4", "text-center", { "opacity-50": !file }]'
       @click="uploadFile">Upload</button>
@@ -55,8 +51,7 @@ import { ref } from 'vue';
 import { useStore } from '@/stores/index';
 import { useRouter } from 'vue-router';
 import Header from '@/components/Header.vue'
-import Pill from '@/components/Pill.vue';
-import AddPill from '@/components/AddPill.vue';
+import PillContent from '@/components/PillContent.vue';
 
 const name = ref('')
 const ingredients = ref('')
@@ -68,21 +63,15 @@ const file = ref<File | null>(null)
 const router = useRouter()
 let uploadedImageUrl = '';
 
-const addTag = (tag: string) => {
-  if (tag && !tags.value.includes(tag)) {
-    tags.value.push(tag.toLowerCase());
-  }
-}
-
-const removeTag = (tag: string) => {
-  tags.value = tags.value.filter(t => t !== tag)
-}
-
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target.files && target.files.length > 0) {
     file.value = target.files[0];
   }
+}
+
+const setTags = (newTags: string[]) => {
+  tags.value = newTags
 }
 
 const removeFile = () => {
