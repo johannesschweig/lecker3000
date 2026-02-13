@@ -1,7 +1,9 @@
 # my edits
 .env
+.env.local
 .env.production
 res/
+surge/
 
 # Logs
 logs

@@ -1,6 +1,6 @@
 # lecker3000
 
-A recipe web app using dropbox as storage. Live on https://lecker3000.surge.sh/
+A recipe web app using dropbox as storage. Live on https://lecker3000.vercel.app/
 
 ## Project Setup
 
