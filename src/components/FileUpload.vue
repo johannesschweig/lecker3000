@@ -39,7 +39,7 @@
     <div class="text-2xl mb-2">Instruction</div>
     <textarea v-model="instruction" placeholder="Crack the eggs open&#10;Boil the water" rows="5" class="w-full mb-4 rounded-sm px-4 py-4 border border-black"></textarea>
 
-    <PillContent :onSave="setTags" class="mb-4" />
+    <PillContent :onSave="setTags" class="mb-4" :editable="true"/>
 
     <button 
       :disabled="loading || !file || !name"
@@ -119,7 +119,8 @@ const saveRecipe = async () => {
       instruction: instruction.value,
       tags: tags.value,
       image_url: urlData.publicUrl,
-      extension: extension
+      extension: extension,
+      user_id: store.currentUser?.id || ''
     });
     store.fetchRecipes()
 

@@ -12,6 +12,10 @@ const props = defineProps(
     onSave: {
       type: Function,
       required: true
+    },
+    editable: {
+      type: Boolean,
+      default: false
     }
   }
 )
@@ -63,7 +67,7 @@ function removeTag(tag: string) {
         <button class="btn btn-secondary" @click="cancel()">Cancel</button>
         <button class="btn btn-primary" :disabled="tags === props.initialTags" @click="change()">Save</button>
       </div>
-      <button v-else class="btn btn-secondary" @click="edit()">Edit</button>
+      <button v-else-if="editable" class="btn btn-secondary" @click="edit()">Edit</button>
     </div>
 
     <div :class="editing ? 'border border-black p-2 rounded-2xl mt-2' : ''">

@@ -1,10 +1,11 @@
 # TODO
-- refresh on page in vercel does not work
 - add option in fileupload to create from url via AI
 - add option to add ingredient to todoist
 - delete recipe: dialogue or long press
   - difficult with animation, ugly with dialog
 
+# 0.9.0
+- users can only edit/delete their own recipes, but view all if they know the link
 # 0.8.0
 - migration from dropbox to supabase
 - option to change title

@@ -13,7 +13,7 @@
         <button class="btn btn-secondary" @click="cancel()">Cancel</button>
         <button class="btn btn-primary" :disabled="content === savedContent" @click="change()">Save</button>
       </div>
-      <button v-else class="btn btn-secondary" @click="edit()">Edit</button>
+      <button v-else-if="editable" class="btn btn-secondary" @click="edit()">Edit</button>
     </div>
     <div class="opacity-90 text-lg" :class="contentType !== ContentType.NAME ? 'mb-4' : ''">
       <textarea v-if="editing && contentType !== ContentType.NAME" :rows="content?.split(/\r?\n|\\n/).length + 1"
@@ -56,6 +56,10 @@ const props = defineProps({
   contentType: {
     type: String as PropType<ContentType>,
     required: true
+  },
+  editable: {
+    type: Boolean,
+    default: false
   }
 })
 

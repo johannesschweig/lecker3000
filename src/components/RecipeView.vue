@@ -23,22 +23,22 @@
     </div>
   </div>
   <div v-else>
-    <Header :title="recipe.name" :back="true" :add="false" :recipeId="String(route.params.id)" :editable="true" />
+    <Header :title="recipe.name" :back="true" :add="false" :recipeId="String(route.params.id)" :editable="store.isOwner(recipe.user_id)" />
     <!-- Image -->
     <img v-if='recipe.image_url' :key="recipe.id" :src="recipe.image_url" :alt="recipe.name"
       class="rounded-2xl border border-black mb-2 md:max-w-2xl lg:max-w-3xl">
     <div class="flex justify-end mb-8">
       <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="onFileChanged" />
-      <button class="btn btn-secondary" @click='fileInput?.click()'>Change image</button>
+      <button v-if="store.isOwner(recipe.user_id)" class="btn btn-secondary" @click='fileInput?.click()'>Change image</button>
     </div>
     <!-- Ingredients -->
-    <Content :recipeId='recipe.id' :initialContent='recipe.ingredients' :contentType='ContentType.INGREDIENTS' />
+    <Content :recipeId='recipe.id' :initialContent='recipe.ingredients' :contentType='ContentType.INGREDIENTS' :editable="store.isOwner(recipe.user_id)" />
     <!-- Instruction -->
-    <Content :recipeId='recipe.id' :initialContent='recipe.instruction' :contentType='ContentType.INSTRUCTION' />
+    <Content :recipeId='recipe.id' :initialContent='recipe.instruction' :contentType='ContentType.INSTRUCTION' :editable="store.isOwner(recipe.user_id)" />
     <!-- Tags -->
-    <PillContent :initialTags="recipe.tags" :onSave="updateTags" class="mb-8"/>
+    <PillContent :initialTags="recipe.tags" :onSave="updateTags" class="mb-8" :editable="store.isOwner(recipe.user_id)"/>
     
-    <div>
+    <div v-if="store.isOwner(recipe.user_id)">
       <RouterLink to="/home" class="btn btn-delete" @click="deleteRecipe()">Delete recipe</RouterLink>
     </div>
   </div>
@@ -61,7 +61,7 @@ const router = useRouter();
 const fileInput = ref<HTMLInputElement | null>(null);
 const recipe = computed(() => {
   const r = store.recipes.find(r => r.id === route.params.id)
-  return r ? r : { id: '123', name: 'Loading...', extension: 'Loading...', ingredients: 'Loading...', instruction: 'Loading...', tags: [] }
+  return r ? r : { id: '123', name: 'Loading...', extension: 'Loading...', ingredients: 'Loading...', instruction: 'Loading...', tags: [], user_id: '', image_url: '' }
 })
 
 const onFileChanged = async (event: Event) => {
